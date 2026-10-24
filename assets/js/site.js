@@ -212,9 +212,9 @@
   const MV_SRC = "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
   // Метки слабых мест. Координаты glTF в метрах (x, вверх, назад), сняты с объектов модели.
   const HOTSPOTS = [
-    { label: "Антикрыло", position: "0.07 0.128 0.122", normal: "0 1 0", target: "#node-body" },
-    { label: "Рычаги подвески", position: "0.05 0.03 -0.112", normal: "0 0 -1", target: "#node-suspension" },
-    { label: "Колёса", position: "0.109 0.045 -0.093", normal: "1 0 0", target: "#node-wheels" }
+    { label: "Антикрыло", position: "0.06 0.122 0.13", normal: "0 1 0", target: "#node-body" },
+    { label: "Рычаги подвески", position: "0.04 0.024 -0.105", normal: "0 0 -1", target: "#node-suspension" },
+    { label: "Колёса", position: "0.105 0.0375 -0.0925", normal: "1 0 0", target: "#node-wheels" }
   ];
 
   async function initModel() {

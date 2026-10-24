@@ -74,7 +74,7 @@ body::before {
 }
 .topbar {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
-  background: var(--ink); color: var(--paper);
+  background: var(--ink); color: #eef1f4;
 }
 .topbar__in { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); padding-block: .6rem; flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: var(--s-3); color: inherit; text-decoration: none; }
@@ -207,7 +207,7 @@ h4 { font: 700 1rem/1.3 var(--f-body); }
 .steps li::before {
   content: counter(step); position: absolute; left: 0; top: -.1rem;
   width: 2.1rem; height: 2.1rem; display: grid; place-items: center;
-  font: 700 .95rem/1 var(--f-mono); color: #fff; background: var(--ink); border-radius: 6px;
+  font: 700 .95rem/1 var(--f-mono); color: var(--paper); background: var(--ink); border-radius: 6px;
 }
 .steps li > b:first-child { display: block; }
 
