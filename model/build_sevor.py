@@ -36,6 +36,8 @@ from mathutils import Matrix, Vector
 HERE = os.path.dirname(os.path.abspath(__file__))
 LIVERY = os.environ.get("SEVOR_LIVERY", "blue").lower()
 SUFFIX = "" if LIVERY == "blue" else "-" + LIVERY
+LIVERY_COLORS = {"blue": ("#1d4fc4", "#2aa7e0", "#d81f2a"),   # основной, пятна, «S»
+                 "red": ("#d7262e", "#2aa7e0", "#f2f2f2")}
 GLB_PATH = os.path.join(HERE, f"sevor{SUFFIX}.glb")
 JSON_PATH = os.path.join(HERE, f"parts{SUFFIX}.json")
 PREVIEW_PATH = os.path.join(HERE, f"preview{SUFFIX}.png")
@@ -97,10 +99,13 @@ def make_material(name, hex_color, metallic=0.0, roughness=0.5,
 
 
 def build_materials():
-    main, accent, logo = {"blue": ("#1d4fc4", "#2aa7e0", "#d81f2a"),
-                          "red": ("#d7262e", "#2aa7e0", "#f2f2f2")}[LIVERY]
+    main, accent, logo = LIVERY_COLORS[LIVERY]
     # кузов и крыло — свои материалы (просмотрщик делает их прозрачными)
-    make_material("Body_Main", main, roughness=0.3)
+    m = make_material("Body_Main", main, roughness=0.3)
+    tex = m.node_tree.nodes.new("ShaderNodeTexImage")
+    tex.image = make_camo_image()
+    m.node_tree.links.new(tex.outputs["Color"],
+                          m.node_tree.nodes["Principled BSDF"].inputs["Base Color"])
     make_material("Body_Accent", accent, roughness=0.3)
     make_material("Body_Black", "#16171a", roughness=0.4)
     make_material("Body_Logo", logo, roughness=0.3)
@@ -206,6 +211,7 @@ class Part:
         self.name = name
         self.mats = list(mats)
         self.bm = bmesh.new()
+        self.vuv = {}          # вершина -> UV (только кузов)
 
     def mi(self, mat):
         if mat not in self.mats:
@@ -229,6 +235,13 @@ class Part:
         v = [self._v(c, M) for c in (
             (x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0),
             (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1))]
+        for idx in ((0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4),
+                    (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)):
+            self._face([v[i] for i in idx], mat)
+
+    def hexa(self, pts, mat):
+        """Шестигранник по 8 точкам (низ 0-3, верх 4-7, как в box)."""
+        v = [self._v(c) for c in pts]
         for idx in ((0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4),
                     (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)):
             self._face([v[i] for i in idx], mat)
@@ -412,6 +425,11 @@ class Part:
         hi = Vector([max(v.co[i] for v in bm.verts) for i in range(3)])
         c = (lo + hi) / 2
         bmesh.ops.translate(bm, vec=-c, verts=bm.verts)
+        if self.vuv:
+            uvl = bm.loops.layers.uv.new("UVMap")
+            for f in bm.faces:
+                for l in f.loops:
+                    l[uvl].uv = self.vuv.get(l.vert, (0.0, 0.0))
         me = bpy.data.meshes.new(self.name)
         bm.to_mesh(me)
         bm.free()
@@ -537,8 +555,9 @@ def build_shock_tower(end):
     sy = 1 if end == "F" else -1
     p = Part(f"P2504_{end}", ["Plastic_Black", "Steel"])
     y0, y1 = sy * TOWER_Y, sy * (TOWER_Y + 0.0028)
-    poly = [(-0.022, 0.040), (0.022, 0.040), (0.034, 0.067), (0.047, 0.083),
-            (0.047, 0.0885), (-0.047, 0.0885), (-0.047, 0.083), (-0.034, 0.067)]
+    poly = [(-0.022, 0.040), (0.022, 0.040), (0.034, 0.067), (0.047, 0.081),
+            (0.047, 0.0845), (0.042, 0.0875), (-0.042, 0.0875), (-0.047, 0.0845),
+            (-0.047, 0.081), (-0.034, 0.067)]
     p.prism(poly, y0, y1, "Plastic_Black", axis="Y")
     for sx in (-1, 1):
         p.bar((sx * 0.012, y0, 0.042), (sx * 0.040, y0, 0.085), 0.004, 0.003,
@@ -554,8 +573,8 @@ def build_shock_tower(end):
 def build_body_post(end):
     sy = 1 if end == "F" else -1
     p = Part(f"P2517_{end}", ["Plastic_Black"])
-    top_y, top_z = (0.100, 0.104) if end == "F" else (-0.104, 0.103)
-    p.box((-0.017, sy * TOWER_Y, 0.0840), (0.017, sy * (TOWER_Y + 0.004), 0.0885),
+    top_y, top_z = (0.100, 0.104) if end == "F" else (-0.104, 0.106)
+    p.box((-0.017, sy * TOWER_Y, 0.0835), (0.017, sy * (TOWER_Y + 0.004), 0.0875),
           "Plastic_Black")
     for sx in (-1, 1):
         p.cyl((sx * 0.014, sy * (TOWER_Y + 0.002), 0.0860), (sx * 0.014, top_y, top_z),
@@ -593,11 +612,12 @@ def build_bumper_rear():
 
 def build_wing_mount():
     p = Part("WING_MOUNT", ["Plastic_Black"])
-    p.box((-0.030, -0.1160, 0.0895), (0.030, -0.1420, 0.0925), "Plastic_Black")
+    p.box((-0.026, -0.1150, 0.0540), (0.026, -0.1465, 0.0570), "Plastic_Black")
     for sx in (-1, 1):
-        p.box((sx * 0.010, -0.1150, 0.0820), (sx * 0.014, -0.1340, 0.0895), "Plastic_Black")
-        p.box((sx * 0.0195, -0.1180, 0.0925), (sx * 0.0255, -0.1360, 0.0945), "Plastic_Black")
-    return make(p, "", "Крепление антикрыла", "chassis", "wing", bevel=0.0006)
+        p.box((sx * 0.0150, -0.1180, 0.0570), (sx * 0.0230, -0.1420, 0.0600), "Plastic_Black")
+        p.bar((sx * 0.020, -0.1370, 0.0545), (sx * 0.020, -0.1300, 0.0420), 0.0030, 0.0030,
+              "Plastic_Black", up=(1, 0, 0))
+    return make(p, "", "Площадка крепления антикрыла", "chassis", "wing", bevel=0.0006)
 
 
 # ---------------------------------------------------------------- трансмиссия
@@ -1061,10 +1081,10 @@ def build_axle_parts(tag, sx, sy):
                    M=axis_m((sx * 0.0742, yc, AZ), ax) @ ROT_Z2X)
     make(p, "P2021", f"Колёсный хекс {ru}", "hubs", "hex", sharp_deg=40, bevel=0.0003)
 
-    p = Part(f"F5226_{tag}", ["Steel"])
+    p = Part(f"F5226_{tag}", ["Chrome"])
     Mn = axis_m((sx * 0.0882, yc, AZ), ax) @ ROT_Z2X
-    p.ring_extrude(circle_pts(6, 0.0040, math.pi / 6), 0.0016, 0.0008, 0.0036, "Steel", M=Mn)
-    p.ring_extrude(circle_pts(24, 0.0046), 0.0016, 0.0, 0.0008, "Steel", M=Mn)
+    p.ring_extrude(circle_pts(6, 0.0040, math.pi / 6), 0.0016, 0.0008, 0.0036, "Chrome", M=Mn)
+    p.ring_extrude(circle_pts(24, 0.0046), 0.0016, 0.0, 0.0008, "Chrome", M=Mn)
     make(p, "F5226", f"Колёсная гайка M4 {ru}", "hubs", "hex", sharp_deg=40)
 
 
@@ -1115,19 +1135,17 @@ def build_wheel(tag, sx, sy):
         p.cyl((0.0205, *q), (0.0212, *q), 0.0006, "Rim_Black", segs=6)
     p.lathe([(-0.0050, 0.0030), (-0.0050, 0.0078), (0.0040, 0.0078), (0.0040, 0.0030)],
             "Rim_Black", segs=24, closed=True)
-    for i in range(5):
+    for i in range(5):     # 5 широких спиц, расширяются к ободу
         a = 2 * math.pi * i / 5
-        for s in (-1, 1):
-            ah = a + s * math.radians(7)       # пара сходится у ступицы,
-            at = a + s * math.radians(19)      # расходится к ободу (V-спица)
-            q0 = Vector((0.0015, 0.0068 * math.cos(ah), 0.0068 * math.sin(ah)))
-            q1 = Vector((0.0165, 0.0232 * math.cos(at), 0.0232 * math.sin(at)))
-            p.bar(q0, q1, 0.0035, 0.0048, "Rim_Black", up=(0, -math.sin(at), math.cos(at)))
-        # перемычка между спицами пары у обода
-        am = Vector((0.0160, 0.0205 * math.cos(a), 0.0205 * math.sin(a)))
-        p.bar(am - Vector((0, -math.sin(a), math.cos(a))) * 0.004,
-              am + Vector((0, -math.sin(a), math.cos(a))) * 0.004, 0.0030, 0.0030,
-              "Rim_Black", up=(1, 0, 0))
+        rad = Vector((0, math.cos(a), math.sin(a)))
+        tan = Vector((0, -math.sin(a), math.cos(a)))
+        hub, rim = Vector((0.0040, 0, 0)) + rad * 0.0068, Vector((0.0170, 0, 0)) + rad * 0.0236
+        depth = Vector((0.0040, 0, 0))
+        quad = [hub - tan * 0.0030, rim - tan * 0.0058, rim + tan * 0.0058, hub + tan * 0.0030]
+        p.hexa([q - depth for q in quad] + quad, "Rim_Black")
+        # рёбрышко по центру спицы
+        p.bar(hub + rad * 0.002 + Vector((0.0004, 0, 0)), rim - rad * 0.002 + Vector((0.0004, 0, 0)),
+              0.0012, 0.0014, "Rim_Black", up=(1, 0, 0))
     p.transform(place)
     make(p, "P2555", f"Диск колеса {SIDE_RU[tag]}", "wheels", "", parent=asm,
          bevel=0.0004, sharp_deg=40)
@@ -1219,24 +1237,26 @@ def build_electric():
 
 # ---------------------------------------------------------------- кузов
 
-# Сечения кузова спереди назад:
-# y, zb (низ борта), wb, zs (плечо), ws, zo (край крыши/капота), wo, zi, wi
+# Сечения кузова спереди назад (тонкая скорлупа, снизу и сзади открыта):
+# y, zb (низ борта), wb, zs (плечо), ws, zo (край крыши/капота/борта), wo, zi, wi
 BODY_KEYS = [
-    (0.120, 0.052, 0.050, 0.072, 0.054, 0.084, 0.046, 0.086, 0.020),
-    (0.110, 0.048, 0.060, 0.088, 0.066, 0.094, 0.056, 0.096, 0.022),
-    (0.0925, 0.048, 0.064, 0.098, 0.075, 0.101, 0.062, 0.102, 0.024),
-    (0.050, 0.046, 0.060, 0.097, 0.062, 0.101, 0.054, 0.103, 0.024),
-    (0.015, 0.046, 0.060, 0.098, 0.060, 0.119, 0.040, 0.121, 0.018),
-    (-0.028, 0.046, 0.060, 0.098, 0.060, 0.119, 0.040, 0.121, 0.018),
-    (-0.042, 0.046, 0.060, 0.099, 0.060, 0.104, 0.056, 0.096, 0.042),
-    (-0.0925, 0.048, 0.064, 0.101, 0.075, 0.105, 0.066, 0.096, 0.042),
-    (-0.104, 0.050, 0.064, 0.101, 0.070, 0.105, 0.064, 0.096, 0.042),
-    (-0.112, 0.056, 0.058, 0.097, 0.062, 0.101, 0.056, 0.096, 0.042),
+    (0.120, 0.052, 0.048, 0.070, 0.053, 0.084, 0.045, 0.086, 0.020),
+    (0.110, 0.050, 0.058, 0.084, 0.064, 0.092, 0.054, 0.094, 0.022),
+    (0.0925, 0.048, 0.064, 0.093, 0.074, 0.096, 0.062, 0.097, 0.024),
+    (0.040, 0.046, 0.060, 0.096, 0.063, 0.100, 0.055, 0.102, 0.024),
+    (0.005, 0.046, 0.060, 0.097, 0.060, 0.119, 0.040, 0.121, 0.018),
+    (-0.035, 0.046, 0.060, 0.098, 0.060, 0.119, 0.040, 0.121, 0.018),
+    (-0.048, 0.046, 0.060, 0.099, 0.062, 0.103, 0.060, 0.103, 0.052),
+    (-0.0925, 0.048, 0.064, 0.101, 0.074, 0.104, 0.070, 0.104, 0.062),
+    (-0.110, 0.052, 0.062, 0.100, 0.070, 0.103, 0.066, 0.103, 0.058),
 ]
-ARCH_R = WR + 0.0030
-Y_WINDSHIELD = (0.015, 0.050)
-Y_CAB = (-0.028, 0.015)
-Y_REARWIN = (-0.042, -0.028)
+ARCH_R = 0.045              # большие арки колёс
+Y_WINDSHIELD = (0.005, 0.040)
+Y_CAB = (-0.035, 0.005)
+Y_REARWIN = (-0.048, -0.035)
+BODY_T = 0.0015             # толщина стенок скорлупы
+CAMO_K = 0.36               # метров контура сечения на всю высоту текстуры
+LOGO_Y, LOGO_Z = -0.038, 0.071
 
 
 def body_station(y):
@@ -1261,116 +1281,182 @@ def body_station(y):
             (wi, zi), (wo, zo), (ws, zs), (wb, zb)]
 
 
-def camo(ym, e):
-    """Камуфляж: пятна голубого и чёрного поверх основного цвета."""
-    v = (math.sin(ym * 140 + e * 2.1) + 0.8 * math.sin(ym * 61 - e * 1.3 + 1.0)
-         + 0.5 * math.sin(ym * 233 + e * 0.7))
-    if v > 1.05:
-        return "Body_Accent"
-    if v < -1.25:
-        return "Body_Black"
-    return "Body_Main"
+def contour_s(pts):
+    """Длины дуги контура сечения в его точках и середина (центр крыши)."""
+    s = [0.0]
+    for a, b in zip(pts, pts[1:]):
+        s.append(s[-1] + math.hypot(b[0] - a[0], b[1] - a[1]))
+    return s, (s[3] + s[4]) / 2
+
+
+def body_uv(y, k, pts):
+    s, mid = contour_s(pts)
+    y0, y1 = BODY_KEYS[-1][0], BODY_KEYS[0][0]
+    return ((y - y0) / (y1 - y0), 0.5 + (s[k] - mid) / CAMO_K)
 
 
 def body_face_material(ym, e):
+    """None — грани нет (кузов открыт)."""
     inside = lambda r: r[0] < ym < r[1]
-    near_wheel = min(abs(ym - WY), abs(ym + WY)) < ARCH_R + 0.002
     side = min(e, 6 - e)
     if ym > 0.114 and side < 2:
-        return "Body_Black"                      # морда / решётка
-    if side == 0:
-        if near_wheel:
-            return "Body_Black"                  # расширители арок
-        return camo(ym, e)
-    if side == 1 and -0.026 < ym < 0.032:
+        return "Body_Black"                      # морда
+    if side == 1 and -0.034 < ym < 0.030:
         return "Body_Glass"                      # боковые окна
-    if inside(Y_WINDSHIELD) or inside(Y_REARWIN):
-        return "Body_Glass"
+    if side >= 2 and (inside(Y_WINDSHIELD) or inside(Y_REARWIN)):
+        return "Body_Glass"                      # лобовое и заднее стекло
     if side == 3 and ym < Y_REARWIN[0]:
-        return "Body_Black"                      # кузов-«корыто»
-    if inside(Y_CAB):
-        return "Body_Main" if side == 3 else "Body_Accent"    # крыша
-    return camo(ym, e)
+        return None                              # за кабиной — открытый кузов
+    return "Body_Main"
 
 
-def body_side_x(y, z):
-    """Наружная X нижней боковины кузова (правый борт) на высоте z."""
-    st = body_station(y)
-    (wb, zb), (ws, zs) = st[7], st[6]
-    t = min(max((z - zb) / (zs - zb), 0.0), 1.0)
-    return wb + (ws - wb) * t
+def make_camo_image():
+    """Запечённая процедурная текстура: камуфляж + красная «S» с обеих сторон."""
+    import numpy as np
+    W, H = 1024, 1024
+    hx = lambda h: np.array([int(h.lstrip("#")[i:i + 2], 16) / 255 for i in (0, 2, 4)])
+    main, accent, logo = LIVERY_COLORS[LIVERY]
+    Ly = BODY_KEYS[0][0] - BODY_KEYS[-1][0]
+    X, Y = np.meshgrid((np.arange(W) + 0.5) / W * Ly, (np.arange(H) + 0.5) / H * CAMO_K)
+
+    ca, sa = math.cos(math.radians(32)), math.sin(math.radians(32))
+    Xr, Yr = X * ca + Y * sa, -X * sa + Y * ca      # пятна — косыми «рваными» мазками
+
+    def vnoise(cell, seed, stretch=2.4):
+        r = np.random.default_rng(seed)
+        fx, fy = Xr / (cell * stretch), Yr / cell
+        fx, fy = fx - fx.min(), fy - fy.min()
+        g = r.random((int(fy.max()) + 3, int(fx.max()) + 3))
+        ix, iy = fx.astype(int), fy.astype(int)
+        tx, ty = fx - ix, fy - iy
+        tx, ty = tx * tx * (3 - 2 * tx), ty * ty * (3 - 2 * ty)
+        a, b = g[iy, ix], g[iy, ix + 1]
+        c, d = g[iy + 1, ix], g[iy + 1, ix + 1]
+        return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty
+
+    def fbm(seed):
+        return (0.55 * vnoise(0.028, seed) + 0.30 * vnoise(0.011, seed + 1)
+                + 0.15 * vnoise(0.0045, seed + 2, 1.0))
+
+    img = np.empty((H, W, 3))
+    img[:] = hx(main)
+    img[fbm(11) > 0.61] = hx(accent)
+    img[fbm(23) > 0.66] = hx("#111215")
+
+    # логотип «S» на боковинах: центр в координатах текстуры (м)
+    glyph = catmull([(0.009, 0.016), (0.0, 0.0185), (-0.0085, 0.013), (-0.0055, 0.004),
+                     (0.0055, -0.004), (0.0085, -0.013), (0.0, -0.0185), (-0.009, -0.016)], 6)
+    pts = body_station(LOGO_Y)
+    s, mid = contour_s(pts)
+    (wb, zb), (ws, zs) = pts[0], pts[1]
+    t = (LOGO_Z - zb) / (zs - zb)
+    s_left = t * s[1]
+    s_right = s[7] - t * (s[7] - s[6])
+    yc = LOGO_Y - BODY_KEYS[-1][0]
+    for sc, sgn in ((0.5 * CAMO_K + s_right - mid, 1), (0.5 * CAMO_K + s_left - mid, -1)):
+        # правый борт: +y вправо, вверх = -s; левый: +y влево, вверх = +s
+        poly = [(yc + sgn * g.x, sc - sgn * g.y) for g in glyph]
+        for width, col in ((0.0042, "#111215"), (0.0030, logo)):
+            mask = np.zeros((H, W), bool)
+            for (ax, ay), (bx, by) in zip(poly, poly[1:]):
+                dx, dy = bx - ax, by - ay
+                tt = np.clip(((X - ax) * dx + (Y - ay) * dy) / (dx * dx + dy * dy), 0, 1)
+                mask |= (X - ax - tt * dx) ** 2 + (Y - ay - tt * dy) ** 2 < width ** 2
+            img[mask] = hx(col)
+
+    im = bpy.data.images.new("Body_Camo", W, H)
+    rgba = np.concatenate([img, np.ones((H, W, 1))], axis=2).astype(np.float32)
+    im.pixels.foreach_set(rgba.ravel())
+    im.filepath_raw = os.path.join(bpy.app.tempdir, "sevor_body_camo.png")
+    im.file_format = "PNG"
+    im.save()
+    im.pack()
+    return im
 
 
 def build_body():
-    p = Part("BODY", ["Body_Main", "Body_Accent", "Body_Black", "Body_Glass", "Body_Light"])
+    p = Part("BODY", ["Body_Main", "Body_Black", "Body_Glass", "Body_Light"])
     y0, y1 = BODY_KEYS[0][0], BODY_KEYS[-1][0]
     ys = {round(k[0], 5) for k in BODY_KEYS}
-    n = 44
+    n = 48
     ys |= {round(y0 + (y1 - y0) * i / n, 5) for i in range(n + 1)}
     for yw in (WY, -WY):
-        for i in range(-8, 9):
-            ys.add(round(yw + ARCH_R * 0.999 * i / 8, 5))
-    ys = sorted(ys, reverse=True)
+        for i in range(-9, 10):
+            ys.add(round(yw + ARCH_R * 0.999 * i / 9, 5))
+    ys = sorted((y for y in ys if y1 <= y <= y0), reverse=True)
     clean = [ys[0]]
     for y in ys[1:]:
-        if clean[-1] - y > 0.0018:
+        if clean[-1] - y > 0.0016:
             clean.append(y)
     ys = clean
-    rows = [[p._v((x, y, z)) for x, z in body_station(y)] for y in ys]
+    rows = []
+    for y in ys:
+        pts = body_station(y)
+        row = []
+        for k, (x, z) in enumerate(pts):
+            v = p._v((x, y, z))
+            p.vuv[v] = body_uv(y, k, pts)
+            row.append(v)
+        rows.append(row)
     for s in range(len(rows) - 1):
         ym = (ys[s] + ys[s + 1]) / 2
         for e in range(7):
-            a, b = rows[s], rows[s + 1]
-            p._face([a[e], b[e], b[e + 1], a[e + 1]], body_face_material(ym, e))
-    p._face(rows[0][::-1], "Body_Black")
-    p._face(rows[-1], "Body_Black")
+            mat = body_face_material(ym, e)
+            if mat:
+                a, b = rows[s], rows[s + 1]
+                p._face([a[e], b[e], b[e + 1], a[e + 1]], mat)
+    p._face(rows[0][::-1], "Body_Black")         # морда спереди; сзади стенки нет
     bmesh.ops.recalc_face_normals(p.bm, faces=p.bm.faces)
     roof = max(p.bm.faces, key=lambda f: f.calc_center_median().z)
     if roof.normal.z < 0:
         bmesh.ops.reverse_faces(p.bm, faces=p.bm.faces)
-    # воздухозаборник капота, решётка, нарисованные фары
-    p.box((-0.016, 0.062, 0.1005), (0.016, 0.088, 0.1045), "Body_Black")
+
+    # передняя панель под мордой (решётка, фары) — до верха бампера
+    nose_zb = body_station(y0)[0][1]
+    p.prism([(-0.046, 0.0545), (0.046, 0.0545), (0.048, nose_zb + 0.001),
+             (-0.048, nose_zb + 0.001)], y0 - 0.0015, y0, "Body_Black", axis="Y")
+    for sx in (-1, 1):
+        p.box((sx * 0.024, y0 - 0.0005, 0.0600), (sx * 0.042, y0 + 0.0010, 0.0665),
+              "Body_Light")
     for i in range(4):
-        y = 0.066 + i * 0.006
-        p.box((-0.013, y, 0.1045), (0.013, y + 0.002, 0.1052), "Body_Main")
-    for sx in (-1, 1):
-        p.box((sx * 0.026, 0.1195, 0.0730), (sx * 0.044, 0.1215, 0.0790), "Body_Light")
-    for i in range(3):
-        z = 0.0745 + i * 0.003
-        p.box((-0.018, 0.1200, z), (0.018, 0.1212, z + 0.0012), "Body_Main")
-    # логотип «S» на боковинах
-    s_pts = [(0.007, 0.012), (0.0, 0.0135), (-0.0062, 0.009), (-0.004, 0.003),
-             (0.004, -0.003), (0.0062, -0.009), (0.0, -0.0135), (-0.007, -0.012)]
-    for sx in (-1, 1):
-        path = catmull([(-0.045 + sx * dy, 0.072 + dz) for dy, dz in s_pts], 4)
-        for q0, q1 in zip(path, path[1:]):
-            a3 = Vector((sx * (body_side_x(q0.x, q0.y) + 0.0006), q0.x, q0.y))
-            b3 = Vector((sx * (body_side_x(q1.x, q1.y) + 0.0006), q1.x, q1.y))
-            p.bar(a3, b3, 0.0034, 0.0008, "Body_Logo", up=(sx, 0, 0))
-    return make(p, "", "Кузов S-EVOR", "body", "body", recalc=False, sharp_deg=30)
+        z = 0.0575 + i * 0.0035
+        p.box((-0.017, y0 - 0.0005, z), (0.017, y0 + 0.0008, z + 0.0012), "Body_Glass")
+    # воздухозаборник на капоте
+    zh = body_station(0.074)[3][1]
+    p.box((-0.014, 0.064, zh - 0.001), (0.014, 0.084, zh + 0.0025), "Body_Black")
+    # поперечная перемычка за кабиной с отверстиями под задние стойки кузова
+    p.box((-0.060, -0.1085, 0.1005), (0.060, -0.0995, 0.1020), "Body_Black")
+    obj = make(p, "", "Кузов S-EVOR", "body", "body", recalc=False, sharp_deg=30)
+    mod = obj.modifiers.new("Shell", "SOLIDIFY")
+    mod.thickness = BODY_T
+    mod.offset = -1.0
+    mod.use_even_offset = True
+    return obj
 
 
 def build_wing():
     p = Part("WING", ["Wing_Black"])
-    tilt = Matrix.Translation((0, -0.1300, 0.1170)) @ Matrix.Rotation(math.radians(-10), 4, "X")
-    p.cbox((0, 0, 0), (0.180, 0.048, 0.0025), "Wing_Black", M=tilt)
-    p.cbox((0, -0.0230, 0.0030), (0.180, 0.0020, 0.0060), "Wing_Black", M=tilt)
-    p.cbox((0, 0.0, 0.0018), (0.060, 0.030, 0.0012), "Wing_Black", M=tilt)
+    tilt = Matrix.Translation((0, -0.1315, 0.1155)) @ Matrix.Rotation(math.radians(-8), 4, "X")
+    p.cbox((0, 0, 0), (0.150, 0.046, 0.0025), "Wing_Black", M=tilt)
+    p.cbox((0, -0.0220, 0.0030), (0.150, 0.0020, 0.0060), "Wing_Black", M=tilt)
+    # приподнятая центральная часть
+    p.cbox((0, 0.0020, 0.0040), (0.052, 0.036, 0.0022), "Wing_Black", M=tilt)
     for sx in (-1, 1):
-        x0 = sx * 0.0905
-        poly = [(-0.1020, 0.1075), (-0.1520, 0.1025), (-0.1545, 0.1250), (-0.1120, 0.1215)]
+        p.cbox((sx * 0.0255, 0.0020, 0.0020), (0.0020, 0.036, 0.0045), "Wing_Black", M=tilt)
+        x0 = sx * 0.0760
+        poly = [(-0.1040, 0.1095), (-0.1515, 0.1040), (-0.1545, 0.1250), (-0.1120, 0.1225)]
         p.prism(poly, x0 - 0.0012, x0 + 0.0012, "Wing_Black", axis="X")
     make(p, "", "Антикрыло", "body", "wing", bevel=0.0005)
 
     for side, sx in (("L", -1), ("R", 1)):
         p = Part(f"WING_STRUT_{side}", ["Wing_Black"])
-        poly = [(-0.1180, 0.0925), (-0.1360, 0.0925), (-0.1395, 0.1150), (-0.1225, 0.1150)]
-        p.prism(poly, sx * 0.0210, sx * 0.0240, "Wing_Black", axis="X")
+        poly = [(-0.1240, 0.0570), (-0.1420, 0.0570), (-0.1405, 0.1145), (-0.1265, 0.1135)]
+        p.prism(poly, sx * 0.0175, sx * 0.0205, "Wing_Black", axis="X")
         make(p, "", f"Стойка антикрыла {lr(sx, True)}", "body", "wing", bevel=0.0004)
 
 
 def build_clips():
-    for end, (y, z) in (("F", (0.100, 0.104)), ("R", (-0.104, 0.103))):
+    for end, (y, z) in (("F", (0.100, 0.104)), ("R", (-0.104, 0.106))):
         for side, sx in (("L", -1), ("R", 1)):
             p = Part(f"M5387_{end}{side}", ["Steel"])
             x = sx * 0.014
