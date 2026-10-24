@@ -256,7 +256,7 @@ function select(p, opts = {}) {
   $("#i-group").innerHTML = `<span class="sw" style="background:${groupColor(m.group)}"></span>${esc(g.ru)}`;
   $("#i-name").textContent = m.name_ru;
   $("#i-pn").textContent = m.part ? "Номер детали: " + m.part : "";
-  $("#i-term").innerHTML = t ? `<div class="x__term"><h3>${esc(t.term)} — что это?</h3><p>${esc(t.what)}</p><p class="why"><b>Зачем:</b> ${esc(t.why)}</p></div>` : "";
+  $("#i-term").innerHTML = t ? `<div class="x__term"><img class="x__termimg" src="assets/img/glossary/${esc(t.id)}.webp" alt="" width="720" height="540" onerror="this.remove()"><h3>${esc(t.term)} — что это?</h3><p>${esc(t.what)}</p><p class="why"><b>Зачем:</b> ${esc(t.why)}</p></div>` : "";
   const links = [`<a href="index.html#${g.anchor}">В каталоге запчастей</a>`];
   if (m.part) links.push(`<a href="https://aliexpress.ru/wholesale?SearchText=${encodeURIComponent("Remo Hobby " + m.part)}" target="_blank" rel="noopener">Искать ${esc(m.part)}</a>`);
   if (t) links.push(`<a href="index.html#t-${esc(t.id)}">В словарике</a>`);

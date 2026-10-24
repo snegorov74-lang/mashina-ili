@@ -14,7 +14,7 @@ window.GARAGE = {
 
   // Состояние узлов. checked — дата последнего осмотра.
   nodes: [
-    { name: "Кузов", status: "ok", checked: "2026-10-24", note: "Новый" },
+    { name: "Кузов", status: "ok", checked: "2026-10-24", note: "Новый, синий" },
     { name: "Антикрыло", status: "ok", checked: "2026-10-24", note: "Новое" },
     { name: "Рычаги подвески", status: "ok", checked: "2026-10-24", note: "Штатные пластиковые P2505" },
     { name: "Амортизаторы", status: "ok", checked: "2026-10-24", note: "Штатные P6955" },

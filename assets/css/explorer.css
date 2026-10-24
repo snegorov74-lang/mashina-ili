@@ -89,3 +89,5 @@ body.x .topbar { flex: none; }
   .x__hint { display: none; }
   .x__info { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: auto; max-height: 52vh; border-radius: 14px 14px 0 0; z-index: 25; padding-bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
 }
+.x__termimg { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #fff; border-radius: 8px; border: 1px solid var(--line); margin-bottom: var(--s-3); }
+@media (max-width: 860px) { .x__termimg { max-height: 130px; object-fit: contain; } }

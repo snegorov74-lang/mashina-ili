@@ -125,8 +125,12 @@
   const TERMS = {};
   GLOSSARY.forEach((g) => g.terms.forEach((t) => { TERMS[t.id] = t; }));
 
+  // Иллюстрации словарика: assets/img/glossary/<id>.webp. Если файла нет, картинка просто убирается.
+  const termImg = (t, cls) => `<img class="${cls}" src="assets/img/glossary/${esc(t.id)}.webp" alt="" width="720" height="540" loading="lazy" onerror="this.remove()">`;
+
   function termCard(t) {
     return `<li class="gterm" id="t-${esc(t.id)}">
+      ${termImg(t, "gterm__img")}
       <h4>${esc(t.term)}</h4>${t.aka ? `<p class="aka">${esc(t.aka)}</p>` : ""}
       <p>${esc(t.what)}</p>
       <p class="why"><b>Зачем:</b> ${esc(t.why)}</p>
@@ -153,7 +157,7 @@
       const t = TERMS[a.dataset.term];
       if (!t) return;
       current = a;
-      pop.innerHTML = `<h4>${esc(t.term)}</h4>${t.aka ? `<p class="aka">${esc(t.aka)}</p>` : ""}
+      pop.innerHTML = `${termImg(t, "termpop__img")}<h4>${esc(t.term)}</h4>${t.aka ? `<p class="aka">${esc(t.aka)}</p>` : ""}
         <p>${esc(t.what)}</p><p class="why"><b>Зачем:</b> ${esc(t.why)}</p>
         <div class="termpop__foot"><a href="#t-${esc(t.id)}" data-goto="${esc(t.id)}">В словарике →</a><button type="button" class="termpop__close">Закрыть</button></div>`;
       pop.hidden = false;

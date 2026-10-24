@@ -104,7 +104,7 @@ window.PARTS = [
       { no: "P2514", name: "Задний бампер", text: "" },
       { no: "M5387", name: "Клипсы кузова", text: "Теряются чаще всего. Держать запас.", weak: true },
       { no: "—", name: "Антикрыло S-EVOR", text: "Страдает при переворотах. Номер не указан, ищите «Remo 1661 wing».", weak: true },
-      { no: "—", name: "Кузов S-EVOR", text: "Красно-синий или синий. Ищите «Remo 1661 body».", weak: false }
+      { no: "—", name: "Кузов S-EVOR", text: "У Ильи синий (бывает ещё красно-синий). Ищите «Remo 1661 body blue».", weak: false }
     ]
   },
   {
