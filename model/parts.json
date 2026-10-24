@@ -1,0 +1,2147 @@
+[
+ {
+  "id": "P2501",
+  "part": "P2501",
+  "name_ru": "Ванна шасси (нижняя рама)",
+  "group": "chassis",
+  "term": "chassis",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.02525,
+   -0.0
+  ]
+ },
+ {
+  "id": "P2502",
+  "part": "P2502",
+  "name_ru": "Верхняя пластина (центральная распорка)",
+  "group": "chassis",
+  "term": "chassis",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.05975,
+   -0.0
+  ]
+ },
+ {
+  "id": "GEARBOX_F",
+  "part": "",
+  "name_ru": "Корпус переднего редуктора",
+  "group": "chassis",
+  "term": "diff",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.0375,
+   -0.0895
+  ]
+ },
+ {
+  "id": "P2504_F",
+  "part": "P2504",
+  "name_ru": "Стойка амортизаторов передняя",
+  "group": "chassis",
+  "term": "chassis",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.05925,
+   -0.10875
+  ]
+ },
+ {
+  "id": "P2517_F",
+  "part": "P2517",
+  "name_ru": "Стойка кузова передняя",
+  "group": "chassis",
+  "term": "body",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.09473,
+   -0.10732
+  ]
+ },
+ {
+  "id": "P2528_F",
+  "part": "P2528",
+  "name_ru": "Корпус переднего дифференциала",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   -0.00575,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "G1612_F",
+  "part": "G1612",
+  "name_ru": "Коронная шестерня переднего дифференциала",
+  "group": "diff",
+  "term": "gearT",
+  "parent": "P6952_F",
+  "center": [
+   0.00575,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "M5362_F",
+  "part": "M5362",
+  "name_ru": "Крестовина сателлитов переднего дифференциала",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   -0.0,
+   0.03897,
+   -0.0925
+  ]
+ },
+ {
+  "id": "G1613_F_1",
+  "part": "G1613",
+  "name_ru": "Сателлит переднего дифференциала №1",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   0.0,
+   0.0432,
+   -0.0925
+  ]
+ },
+ {
+  "id": "G1613_F_2",
+  "part": "G1613",
+  "name_ru": "Сателлит переднего дифференциала №2",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   0.0,
+   0.03401,
+   -0.08719
+  ]
+ },
+ {
+  "id": "G1613_F_3",
+  "part": "G1613",
+  "name_ru": "Сателлит переднего дифференциала №3",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   0.0,
+   0.03401,
+   -0.09781
+  ]
+ },
+ {
+  "id": "G1614_F_L",
+  "part": "G1614",
+  "name_ru": "Полуосевая шестерня переднего дифференциала левая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   -0.0079,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2521_F_L",
+  "part": "P2521",
+  "name_ru": "Выходная чашка переднего дифференциала левая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   -0.02025,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "B5511_DF_L",
+  "part": "B5511",
+  "name_ru": "Подшипник переднего дифференциала левый",
+  "group": "diff",
+  "term": "bearing",
+  "parent": "P6952_F",
+  "center": [
+   -0.018,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "G1614_F_R",
+  "part": "G1614",
+  "name_ru": "Полуосевая шестерня переднего дифференциала правая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   0.0079,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2521_F_R",
+  "part": "P2521",
+  "name_ru": "Выходная чашка переднего дифференциала правая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_F",
+  "center": [
+   0.0175,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "B5511_DF_R",
+  "part": "B5511",
+  "name_ru": "Подшипник переднего дифференциала правый",
+  "group": "diff",
+  "term": "bearing",
+  "parent": "P6952_F",
+  "center": [
+   0.018,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "GEARBOX_R",
+  "part": "",
+  "name_ru": "Корпус заднего редуктора",
+  "group": "chassis",
+  "term": "diff",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.0375,
+   0.0895
+  ]
+ },
+ {
+  "id": "P2504_R",
+  "part": "P2504",
+  "name_ru": "Стойка амортизаторов задняя",
+  "group": "chassis",
+  "term": "chassis",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.05925,
+   0.10875
+  ]
+ },
+ {
+  "id": "P2517_R",
+  "part": "P2517",
+  "name_ru": "Стойка кузова задняя",
+  "group": "chassis",
+  "term": "body",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.0941,
+   0.10925
+  ]
+ },
+ {
+  "id": "P2528_R",
+  "part": "P2528",
+  "name_ru": "Корпус заднего дифференциала",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   -0.00575,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "G1612_R",
+  "part": "G1612",
+  "name_ru": "Коронная шестерня заднего дифференциала",
+  "group": "diff",
+  "term": "gearT",
+  "parent": "P6952_R",
+  "center": [
+   0.00575,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "M5362_R",
+  "part": "M5362",
+  "name_ru": "Крестовина сателлитов заднего дифференциала",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   -0.0,
+   0.03897,
+   0.0925
+  ]
+ },
+ {
+  "id": "G1613_R_1",
+  "part": "G1613",
+  "name_ru": "Сателлит заднего дифференциала №1",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   0.0,
+   0.0432,
+   0.0925
+  ]
+ },
+ {
+  "id": "G1613_R_2",
+  "part": "G1613",
+  "name_ru": "Сателлит заднего дифференциала №2",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   0.0,
+   0.03401,
+   0.09781
+  ]
+ },
+ {
+  "id": "G1613_R_3",
+  "part": "G1613",
+  "name_ru": "Сателлит заднего дифференциала №3",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   0.0,
+   0.03401,
+   0.08719
+  ]
+ },
+ {
+  "id": "G1614_R_L",
+  "part": "G1614",
+  "name_ru": "Полуосевая шестерня заднего дифференциала левая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   -0.0079,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2521_R_L",
+  "part": "P2521",
+  "name_ru": "Выходная чашка заднего дифференциала левая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   -0.02025,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "B5511_DR_L",
+  "part": "B5511",
+  "name_ru": "Подшипник заднего дифференциала левый",
+  "group": "diff",
+  "term": "bearing",
+  "parent": "P6952_R",
+  "center": [
+   -0.018,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "G1614_R_R",
+  "part": "G1614",
+  "name_ru": "Полуосевая шестерня заднего дифференциала правая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   0.0079,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2521_R_R",
+  "part": "P2521",
+  "name_ru": "Выходная чашка заднего дифференциала правая",
+  "group": "diff",
+  "term": "diff",
+  "parent": "P6952_R",
+  "center": [
+   0.0175,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "B5511_DR_R",
+  "part": "B5511",
+  "name_ru": "Подшипник заднего дифференциала правый",
+  "group": "diff",
+  "term": "bearing",
+  "parent": "P6952_R",
+  "center": [
+   0.018,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2503",
+  "part": "P2503",
+  "name_ru": "Передний бампер",
+  "group": "chassis",
+  "term": "bumper",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.03424,
+   -0.12275
+  ]
+ },
+ {
+  "id": "P2514",
+  "part": "P2514",
+  "name_ru": "Задний бампер",
+  "group": "chassis",
+  "term": "bumper",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.03503,
+   0.1216
+  ]
+ },
+ {
+  "id": "WING_MOUNT",
+  "part": "",
+  "name_ru": "Крепление антикрыла",
+  "group": "chassis",
+  "term": "wing",
+  "parent": "grp_chassis",
+  "center": [
+   0.0,
+   0.08825,
+   0.1285
+  ]
+ },
+ {
+  "id": "E9661",
+  "part": "E9661",
+  "name_ru": "Мотор 390 коллекторный",
+  "group": "drive",
+  "term": "brushed",
+  "parent": "grp_drive",
+  "center": [
+   0.0195,
+   0.0459,
+   0.04025
+  ]
+ },
+ {
+  "id": "E9661_heatsink",
+  "part": "E9661",
+  "name_ru": "Радиатор мотора",
+  "group": "drive",
+  "term": "brushed",
+  "parent": "grp_drive",
+  "center": [
+   0.0216,
+   0.0446,
+   0.03825
+  ]
+ },
+ {
+  "id": "A4027",
+  "part": "A4027",
+  "name_ru": "Моторная пластина",
+  "group": "drive",
+  "term": "",
+  "parent": "grp_drive",
+  "center": [
+   0.023,
+   0.04475,
+   0.0598
+  ]
+ },
+ {
+  "id": "G2713",
+  "part": "G2713",
+  "name_ru": "Шестерня мотора 13T",
+  "group": "drive",
+  "term": "gearT",
+  "parent": "grp_drive",
+  "center": [
+   0.01952,
+   0.0446,
+   0.06475
+  ]
+ },
+ {
+  "id": "G1610",
+  "part": "G1610",
+  "name_ru": "Главная шестерня 39T",
+  "group": "drive",
+  "term": "spur",
+  "parent": "grp_drive",
+  "center": [
+   -1e-05,
+   0.0375,
+   0.06425
+  ]
+ },
+ {
+  "id": "P2516",
+  "part": "P2516",
+  "name_ru": "Защита шестерён",
+  "group": "drive",
+  "term": "spur",
+  "parent": "grp_drive",
+  "center": [
+   2e-05,
+   0.0437,
+   0.0655
+  ]
+ },
+ {
+  "id": "P2527",
+  "part": "P2527",
+  "name_ru": "Центральный вал",
+  "group": "drive",
+  "term": "shaft",
+  "parent": "grp_drive",
+  "center": [
+   -0.0,
+   0.0375,
+   0.0
+  ]
+ },
+ {
+  "id": "G1611_F",
+  "part": "G1611",
+  "name_ru": "Ведущая шестерня переднего моста",
+  "group": "drive",
+  "term": "gearT",
+  "parent": "grp_drive",
+  "center": [
+   -2e-05,
+   0.03751,
+   -0.07785
+  ]
+ },
+ {
+  "id": "G1611_R",
+  "part": "G1611",
+  "name_ru": "Ведущая шестерня заднего моста",
+  "group": "drive",
+  "term": "gearT",
+  "parent": "grp_drive",
+  "center": [
+   2e-05,
+   0.03751,
+   0.07785
+  ]
+ },
+ {
+  "id": "B5510_F",
+  "part": "B5510",
+  "name_ru": "Подшипник вала передний",
+  "group": "drive",
+  "term": "bearing",
+  "parent": "grp_drive",
+  "center": [
+   0.0,
+   0.0375,
+   -0.0733
+  ]
+ },
+ {
+  "id": "B5510_R",
+  "part": "B5510",
+  "name_ru": "Подшипник вала задний",
+  "group": "drive",
+  "term": "bearing",
+  "parent": "grp_drive",
+  "center": [
+   0.0,
+   0.0375,
+   0.0733
+  ]
+ },
+ {
+  "id": "B5511_C",
+  "part": "B5511",
+  "name_ru": "Подшипник вала у главной шестерни",
+  "group": "drive",
+  "term": "bearing",
+  "parent": "grp_drive",
+  "center": [
+   0.0,
+   0.0375,
+   0.06
+  ]
+ },
+ {
+  "id": "M5367_FL",
+  "part": "M5367",
+  "name_ru": "Дог-бон (карданчик) передний левый",
+  "group": "drive",
+  "term": "dogbone",
+  "parent": "grp_drive",
+  "center": [
+   -0.04275,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "M5367_FR",
+  "part": "M5367",
+  "name_ru": "Дог-бон (карданчик) передний правый",
+  "group": "drive",
+  "term": "dogbone",
+  "parent": "grp_drive",
+  "center": [
+   0.04275,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "M5367_RL",
+  "part": "M5367",
+  "name_ru": "Дог-бон (карданчик) задний левый",
+  "group": "drive",
+  "term": "dogbone",
+  "parent": "grp_drive",
+  "center": [
+   -0.04275,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "M5367_RR",
+  "part": "M5367",
+  "name_ru": "Дог-бон (карданчик) задний правый",
+  "group": "drive",
+  "term": "dogbone",
+  "parent": "grp_drive",
+  "center": [
+   0.04275,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "SERVO",
+  "part": "",
+  "name_ru": "Сервопривод рулевой (5 проводов)",
+  "group": "steering",
+  "term": "servo",
+  "parent": "grp_steering",
+  "center": [
+   0.025,
+   0.0405,
+   -0.032
+  ]
+ },
+ {
+  "id": "SERVO_HORN",
+  "part": "",
+  "name_ru": "Качалка сервопривода",
+  "group": "steering",
+  "term": "servo",
+  "parent": "grp_steering",
+  "center": [
+   0.0277,
+   0.05865,
+   -0.044
+  ]
+ },
+ {
+  "id": "P2519",
+  "part": "P2519",
+  "name_ru": "Крепление сервопривода",
+  "group": "steering",
+  "term": "servo",
+  "parent": "grp_steering",
+  "center": [
+   0.025,
+   0.03925,
+   -0.023
+  ]
+ },
+ {
+  "id": "P2529",
+  "part": "P2529",
+  "name_ru": "Тяга сервопривода",
+  "group": "steering",
+  "term": "servo",
+  "parent": "grp_steering",
+  "center": [
+   0.03225,
+   0.05425,
+   -0.055
+  ]
+ },
+ {
+  "id": "P2511_L",
+  "part": "P2511",
+  "name_ru": "Рулевая качалка левая",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "P6956",
+  "center": [
+   -0.02,
+   0.05075,
+   -0.0619
+  ]
+ },
+ {
+  "id": "M5365_L",
+  "part": "M5365",
+  "name_ru": "Ось рулевой качалки левая",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "P6956",
+  "center": [
+   -0.02,
+   0.04775,
+   -0.066
+  ]
+ },
+ {
+  "id": "P2511_R",
+  "part": "P2511",
+  "name_ru": "Рулевая качалка правая",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "P6956",
+  "center": [
+   0.0235,
+   0.05075,
+   -0.0619
+  ]
+ },
+ {
+  "id": "M5365_R",
+  "part": "M5365",
+  "name_ru": "Ось рулевой качалки правая",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "P6956",
+  "center": [
+   0.02,
+   0.04775,
+   -0.066
+  ]
+ },
+ {
+  "id": "P6956_link",
+  "part": "P6956",
+  "name_ru": "Соединительная тяга сервосейвера",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "P6956",
+  "center": [
+   0.0,
+   0.05587,
+   -0.05575
+  ]
+ },
+ {
+  "id": "M5384",
+  "part": "M5384",
+  "name_ru": "Пружина сервосейвера",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "P6956",
+  "center": [
+   0.02,
+   0.05778,
+   -0.066
+  ]
+ },
+ {
+  "id": "P2512_L",
+  "part": "P2512",
+  "name_ru": "Рулевая тяга левая",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "grp_steering",
+  "center": [
+   -0.0415,
+   0.0495,
+   -0.068
+  ]
+ },
+ {
+  "id": "P2512_R",
+  "part": "P2512",
+  "name_ru": "Рулевая тяга правая",
+  "group": "steering",
+  "term": "servosaver",
+  "parent": "grp_steering",
+  "center": [
+   0.0415,
+   0.0495,
+   -0.068
+  ]
+ },
+ {
+  "id": "P2505_FL",
+  "part": "P2505",
+  "name_ru": "Рычаг подвески передний левый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.03985,
+   0.02225,
+   -0.0925
+  ]
+ },
+ {
+  "id": "F5281_FL",
+  "part": "F5281",
+  "name_ru": "Ось рычага передняя левая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.022,
+   0.0215,
+   -0.093
+  ]
+ },
+ {
+  "id": "P2510_pin_FL",
+  "part": "",
+  "name_ru": "Палец ступицы в рычаге передний левый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.058,
+   0.0215,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2510_FL",
+  "part": "P2510",
+  "name_ru": "Верхняя тяга подвески передняя левая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.041,
+   0.055,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P6955_endbot_FL",
+  "part": "P6955",
+  "name_ru": "Нижний наконечник амортизатора переднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FL",
+  "center": [
+   -0.0493,
+   0.02843,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_shaft_FL",
+  "part": "P6955",
+  "name_ru": "Шток амортизатора переднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FL",
+  "center": [
+   -0.04431,
+   0.04363,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_perch_FL",
+  "part": "P6955",
+  "name_ru": "Нижняя тарелка пружины переднего левого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FL",
+  "center": [
+   -0.04685,
+   0.03508,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_body_FL",
+  "part": "P6955",
+  "name_ru": "Корпус амортизатора переднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FL",
+  "center": [
+   -0.03792,
+   0.06389,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_cap_FL",
+  "part": "P6955",
+  "name_ru": "Алюминиевый колпачок переднего левого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FL",
+  "center": [
+   -0.0334,
+   0.07837,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_endtop_FL",
+  "part": "P6955",
+  "name_ru": "Верхний наконечник амортизатора переднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FL",
+  "center": [
+   -0.03227,
+   0.08456,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_spring_FL",
+  "part": "P6955",
+  "name_ru": "Пружина переднего левого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FL",
+  "center": [
+   -0.04049,
+   0.05577,
+   -0.104
+  ]
+ },
+ {
+  "id": "P2506_FL",
+  "part": "P2506",
+  "name_ru": "C-хаб левый",
+  "group": "steering",
+  "term": "chub",
+  "parent": "grp_steering",
+  "center": [
+   -0.06329,
+   0.0379,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2507_FL",
+  "part": "P2507",
+  "name_ru": "Поворотный кулак левый",
+  "group": "steering",
+  "term": "knuckle",
+  "parent": "grp_steering",
+  "center": [
+   -0.06736,
+   0.04,
+   -0.08885
+  ]
+ },
+ {
+  "id": "F5280_FL_T",
+  "part": "F5280",
+  "name_ru": "Шкворень верхний левого кулака",
+  "group": "steering",
+  "term": "knuckle",
+  "parent": "grp_steering",
+  "center": [
+   -0.0665,
+   0.05025,
+   -0.0925
+  ]
+ },
+ {
+  "id": "F5280_FL_B",
+  "part": "F5280",
+  "name_ru": "Шкворень нижний левого кулака",
+  "group": "steering",
+  "term": "knuckle",
+  "parent": "grp_steering",
+  "center": [
+   -0.0665,
+   0.02775,
+   -0.0925
+  ]
+ },
+ {
+  "id": "M5368_FL",
+  "part": "M5368",
+  "name_ru": "Ось колеса передний левый",
+  "group": "hubs",
+  "term": "shaft",
+  "parent": "grp_hubs",
+  "center": [
+   -0.0755,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "B5511_FL",
+  "part": "B5511",
+  "name_ru": "Подшипник ступицы внутренний передний левый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   -0.064,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "B5509_FL",
+  "part": "B5509",
+  "name_ru": "Подшипник ступицы наружный передний левый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   -0.0712,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2021_FL",
+  "part": "P2021",
+  "name_ru": "Колёсный хекс передний левый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   -0.0767,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "F5226_FL",
+  "part": "F5226",
+  "name_ru": "Колёсная гайка M4 передний левый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   -0.09,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "D5425_FL",
+  "part": "D5425",
+  "name_ru": "Шина передняя левая",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_FL",
+  "center": [
+   -0.084,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2555_FL",
+  "part": "P2555",
+  "name_ru": "Диск колеса передний левый",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_FL",
+  "center": [
+   -0.0846,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2505_FR",
+  "part": "P2505",
+  "name_ru": "Рычаг подвески передний правый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.03985,
+   0.02225,
+   -0.0925
+  ]
+ },
+ {
+  "id": "F5281_FR",
+  "part": "F5281",
+  "name_ru": "Ось рычага передняя правая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.022,
+   0.0215,
+   -0.093
+  ]
+ },
+ {
+  "id": "P2510_pin_FR",
+  "part": "",
+  "name_ru": "Палец ступицы в рычаге передний правый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.058,
+   0.0215,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2510_FR",
+  "part": "P2510",
+  "name_ru": "Верхняя тяга подвески передняя правая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.041,
+   0.055,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P6955_endbot_FR",
+  "part": "P6955",
+  "name_ru": "Нижний наконечник амортизатора переднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FR",
+  "center": [
+   0.0493,
+   0.02843,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_shaft_FR",
+  "part": "P6955",
+  "name_ru": "Шток амортизатора переднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FR",
+  "center": [
+   0.04431,
+   0.04363,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_perch_FR",
+  "part": "P6955",
+  "name_ru": "Нижняя тарелка пружины переднего правого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FR",
+  "center": [
+   0.04685,
+   0.03508,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_body_FR",
+  "part": "P6955",
+  "name_ru": "Корпус амортизатора переднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FR",
+  "center": [
+   0.03792,
+   0.06389,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_cap_FR",
+  "part": "P6955",
+  "name_ru": "Алюминиевый колпачок переднего правого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FR",
+  "center": [
+   0.0334,
+   0.07837,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_endtop_FR",
+  "part": "P6955",
+  "name_ru": "Верхний наконечник амортизатора переднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FR",
+  "center": [
+   0.03227,
+   0.08456,
+   -0.104
+  ]
+ },
+ {
+  "id": "P6955_spring_FR",
+  "part": "P6955",
+  "name_ru": "Пружина переднего правого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_FR",
+  "center": [
+   0.04049,
+   0.05576,
+   -0.104
+  ]
+ },
+ {
+  "id": "P2506_FR",
+  "part": "P2506",
+  "name_ru": "C-хаб правый",
+  "group": "steering",
+  "term": "chub",
+  "parent": "grp_steering",
+  "center": [
+   0.06329,
+   0.0379,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2507_FR",
+  "part": "P2507",
+  "name_ru": "Поворотный кулак правый",
+  "group": "steering",
+  "term": "knuckle",
+  "parent": "grp_steering",
+  "center": [
+   0.06736,
+   0.04,
+   -0.08885
+  ]
+ },
+ {
+  "id": "F5280_FR_T",
+  "part": "F5280",
+  "name_ru": "Шкворень верхний правого кулака",
+  "group": "steering",
+  "term": "knuckle",
+  "parent": "grp_steering",
+  "center": [
+   0.0665,
+   0.05025,
+   -0.0925
+  ]
+ },
+ {
+  "id": "F5280_FR_B",
+  "part": "F5280",
+  "name_ru": "Шкворень нижний правого кулака",
+  "group": "steering",
+  "term": "knuckle",
+  "parent": "grp_steering",
+  "center": [
+   0.0665,
+   0.02775,
+   -0.0925
+  ]
+ },
+ {
+  "id": "M5368_FR",
+  "part": "M5368",
+  "name_ru": "Ось колеса передний правый",
+  "group": "hubs",
+  "term": "shaft",
+  "parent": "grp_hubs",
+  "center": [
+   0.0755,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "B5511_FR",
+  "part": "B5511",
+  "name_ru": "Подшипник ступицы внутренний передний правый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   0.064,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "B5509_FR",
+  "part": "B5509",
+  "name_ru": "Подшипник ступицы наружный передний правый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   0.0712,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2021_FR",
+  "part": "P2021",
+  "name_ru": "Колёсный хекс передний правый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   0.0767,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "F5226_FR",
+  "part": "F5226",
+  "name_ru": "Колёсная гайка M4 передний правый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   0.09,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "D5425_FR",
+  "part": "D5425",
+  "name_ru": "Шина передняя правая",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_FR",
+  "center": [
+   0.084,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2555_FR",
+  "part": "P2555",
+  "name_ru": "Диск колеса передний правый",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_FR",
+  "center": [
+   0.0846,
+   0.0375,
+   -0.0925
+  ]
+ },
+ {
+  "id": "P2505_RL",
+  "part": "P2505",
+  "name_ru": "Рычаг подвески задний левый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.03985,
+   0.02225,
+   0.0925
+  ]
+ },
+ {
+  "id": "F5281_RL",
+  "part": "F5281",
+  "name_ru": "Ось рычага задняя левая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.022,
+   0.0215,
+   0.09325
+  ]
+ },
+ {
+  "id": "P2510_pin_RL",
+  "part": "",
+  "name_ru": "Палец ступицы в рычаге задний левый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.058,
+   0.0215,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2510_RL",
+  "part": "P2510",
+  "name_ru": "Верхняя тяга подвески задняя левая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   -0.041,
+   0.055,
+   0.0925
+  ]
+ },
+ {
+  "id": "P6955_endbot_RL",
+  "part": "P6955",
+  "name_ru": "Нижний наконечник амортизатора заднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RL",
+  "center": [
+   -0.0493,
+   0.02843,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_shaft_RL",
+  "part": "P6955",
+  "name_ru": "Шток амортизатора заднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RL",
+  "center": [
+   -0.04431,
+   0.04363,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_perch_RL",
+  "part": "P6955",
+  "name_ru": "Нижняя тарелка пружины заднего левого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RL",
+  "center": [
+   -0.04685,
+   0.03508,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_body_RL",
+  "part": "P6955",
+  "name_ru": "Корпус амортизатора заднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RL",
+  "center": [
+   -0.03792,
+   0.06389,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_cap_RL",
+  "part": "P6955",
+  "name_ru": "Алюминиевый колпачок заднего левого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RL",
+  "center": [
+   -0.0334,
+   0.07837,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_endtop_RL",
+  "part": "P6955",
+  "name_ru": "Верхний наконечник амортизатора заднего левого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RL",
+  "center": [
+   -0.03227,
+   0.08456,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_spring_RL",
+  "part": "P6955",
+  "name_ru": "Пружина заднего левого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RL",
+  "center": [
+   -0.04049,
+   0.05577,
+   0.104
+  ]
+ },
+ {
+  "id": "P2513_RL",
+  "part": "P2513",
+  "name_ru": "Задняя ступица левая",
+  "group": "hubs",
+  "term": "hub",
+  "parent": "grp_hubs",
+  "center": [
+   -0.06429,
+   0.0379,
+   0.0925
+  ]
+ },
+ {
+  "id": "M5368_RL",
+  "part": "M5368",
+  "name_ru": "Ось колеса задний левый",
+  "group": "hubs",
+  "term": "shaft",
+  "parent": "grp_hubs",
+  "center": [
+   -0.0755,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "B5511_RL",
+  "part": "B5511",
+  "name_ru": "Подшипник ступицы внутренний задний левый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   -0.064,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "B5509_RL",
+  "part": "B5509",
+  "name_ru": "Подшипник ступицы наружный задний левый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   -0.0712,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2021_RL",
+  "part": "P2021",
+  "name_ru": "Колёсный хекс задний левый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   -0.0767,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "F5226_RL",
+  "part": "F5226",
+  "name_ru": "Колёсная гайка M4 задний левый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   -0.09,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "D5425_RL",
+  "part": "D5425",
+  "name_ru": "Шина задняя левая",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_RL",
+  "center": [
+   -0.084,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2555_RL",
+  "part": "P2555",
+  "name_ru": "Диск колеса задний левый",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_RL",
+  "center": [
+   -0.0846,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2505_RR",
+  "part": "P2505",
+  "name_ru": "Рычаг подвески задний правый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.03985,
+   0.02225,
+   0.0925
+  ]
+ },
+ {
+  "id": "F5281_RR",
+  "part": "F5281",
+  "name_ru": "Ось рычага задняя правая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.022,
+   0.0215,
+   0.09325
+  ]
+ },
+ {
+  "id": "P2510_pin_RR",
+  "part": "",
+  "name_ru": "Палец ступицы в рычаге задний правый",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.058,
+   0.0215,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2510_RR",
+  "part": "P2510",
+  "name_ru": "Верхняя тяга подвески задняя правая",
+  "group": "suspension",
+  "term": "arm",
+  "parent": "grp_suspension",
+  "center": [
+   0.041,
+   0.055,
+   0.0925
+  ]
+ },
+ {
+  "id": "P6955_endbot_RR",
+  "part": "P6955",
+  "name_ru": "Нижний наконечник амортизатора заднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RR",
+  "center": [
+   0.0493,
+   0.02843,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_shaft_RR",
+  "part": "P6955",
+  "name_ru": "Шток амортизатора заднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RR",
+  "center": [
+   0.04431,
+   0.04363,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_perch_RR",
+  "part": "P6955",
+  "name_ru": "Нижняя тарелка пружины заднего правого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RR",
+  "center": [
+   0.04685,
+   0.03508,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_body_RR",
+  "part": "P6955",
+  "name_ru": "Корпус амортизатора заднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RR",
+  "center": [
+   0.03792,
+   0.06389,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_cap_RR",
+  "part": "P6955",
+  "name_ru": "Алюминиевый колпачок заднего правого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RR",
+  "center": [
+   0.0334,
+   0.07837,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_endtop_RR",
+  "part": "P6955",
+  "name_ru": "Верхний наконечник амортизатора заднего правого",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RR",
+  "center": [
+   0.03227,
+   0.08456,
+   0.104
+  ]
+ },
+ {
+  "id": "P6955_spring_RR",
+  "part": "P6955",
+  "name_ru": "Пружина заднего правого амортизатора",
+  "group": "suspension",
+  "term": "shock",
+  "parent": "P6955_RR",
+  "center": [
+   0.04049,
+   0.05576,
+   0.104
+  ]
+ },
+ {
+  "id": "P2513_RR",
+  "part": "P2513",
+  "name_ru": "Задняя ступица правая",
+  "group": "hubs",
+  "term": "hub",
+  "parent": "grp_hubs",
+  "center": [
+   0.06429,
+   0.0379,
+   0.0925
+  ]
+ },
+ {
+  "id": "M5368_RR",
+  "part": "M5368",
+  "name_ru": "Ось колеса задний правый",
+  "group": "hubs",
+  "term": "shaft",
+  "parent": "grp_hubs",
+  "center": [
+   0.0755,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "B5511_RR",
+  "part": "B5511",
+  "name_ru": "Подшипник ступицы внутренний задний правый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   0.064,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "B5509_RR",
+  "part": "B5509",
+  "name_ru": "Подшипник ступицы наружный задний правый",
+  "group": "hubs",
+  "term": "bearing",
+  "parent": "grp_hubs",
+  "center": [
+   0.0712,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2021_RR",
+  "part": "P2021",
+  "name_ru": "Колёсный хекс задний правый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   0.0767,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "F5226_RR",
+  "part": "F5226",
+  "name_ru": "Колёсная гайка M4 задний правый",
+  "group": "hubs",
+  "term": "hex",
+  "parent": "grp_hubs",
+  "center": [
+   0.09,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "D5425_RR",
+  "part": "D5425",
+  "name_ru": "Шина задняя правая",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_RR",
+  "center": [
+   0.084,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "P2555_RR",
+  "part": "P2555",
+  "name_ru": "Диск колеса задний правый",
+  "group": "wheels",
+  "term": "",
+  "parent": "P6973_RR",
+  "center": [
+   0.0846,
+   0.0375,
+   0.0925
+  ]
+ },
+ {
+  "id": "ESC",
+  "part": "",
+  "name_ru": "Регулятор хода 3 в 1 (ESC + приёмник) с радиатором",
+  "group": "electric",
+  "term": "esc",
+  "parent": "grp_electric",
+  "center": [
+   -0.02673,
+   0.05077,
+   -0.03122
+  ]
+ },
+ {
+  "id": "BATTERY",
+  "part": "",
+  "name_ru": "Аккумулятор Li-ion 7,4 В (2S)",
+  "group": "electric",
+  "term": "liion",
+  "parent": "grp_electric",
+  "center": [
+   -0.031,
+   0.0316,
+   0.029
+  ]
+ },
+ {
+  "id": "TPLUG",
+  "part": "",
+  "name_ru": "Разъём T-plug (Deans)",
+  "group": "electric",
+  "term": "tplug",
+  "parent": "grp_electric",
+  "center": [
+   -0.016,
+   0.04675,
+   -0.0055
+  ]
+ },
+ {
+  "id": "BALANCE",
+  "part": "",
+  "name_ru": "Балансировочный разъём аккумулятора",
+  "group": "electric",
+  "term": "balance",
+  "parent": "grp_electric",
+  "center": [
+   -0.042,
+   0.044,
+   -0.0095
+  ]
+ },
+ {
+  "id": "WIRES_BATT",
+  "part": "",
+  "name_ru": "Провода аккумулятора",
+  "group": "electric",
+  "term": "liion",
+  "parent": "grp_electric",
+  "center": [
+   -0.02928,
+   0.04112,
+   -0.00438
+  ]
+ },
+ {
+  "id": "WIRES_ESC",
+  "part": "",
+  "name_ru": "Силовые провода регулятора к аккумулятору",
+  "group": "electric",
+  "term": "esc",
+  "parent": "grp_electric",
+  "center": [
+   -0.01449,
+   0.03857,
+   -0.01451
+  ]
+ },
+ {
+  "id": "WIRES_MOTOR",
+  "part": "",
+  "name_ru": "Провода мотора",
+  "group": "electric",
+  "term": "brushed",
+  "parent": "grp_electric",
+  "center": [
+   0.00671,
+   0.04846,
+   -0.00265
+  ]
+ },
+ {
+  "id": "WIRES_SERVO",
+  "part": "",
+  "name_ru": "Кабель сервопривода (5 проводов)",
+  "group": "electric",
+  "term": "servo",
+  "parent": "grp_electric",
+  "center": [
+   0.00444,
+   0.04049,
+   -0.02467
+  ]
+ },
+ {
+  "id": "WIRES_LED",
+  "part": "",
+  "name_ru": "Провода светодиодной планки",
+  "group": "electric",
+  "term": "led",
+  "parent": "grp_electric",
+  "center": [
+   -0.02137,
+   0.03139,
+   -0.08668
+  ]
+ },
+ {
+  "id": "LED_BAR",
+  "part": "",
+  "name_ru": "Светодиодная планка",
+  "group": "electric",
+  "term": "led",
+  "parent": "grp_electric",
+  "center": [
+   0.0,
+   0.03375,
+   -0.1335
+  ]
+ },
+ {
+  "id": "LED_L",
+  "part": "",
+  "name_ru": "Светодиодная фара левая",
+  "group": "electric",
+  "term": "led",
+  "parent": "grp_electric",
+  "center": [
+   -0.022,
+   0.0337,
+   -0.14
+  ]
+ },
+ {
+  "id": "LED_R",
+  "part": "",
+  "name_ru": "Светодиодная фара правая",
+  "group": "electric",
+  "term": "led",
+  "parent": "grp_electric",
+  "center": [
+   0.022,
+   0.0337,
+   -0.14
+  ]
+ },
+ {
+  "id": "BODY",
+  "part": "",
+  "name_ru": "Кузов S-EVOR",
+  "group": "body",
+  "term": "body",
+  "parent": "grp_body",
+  "center": [
+   0.0,
+   0.0835,
+   -0.0
+  ]
+ },
+ {
+  "id": "WING",
+  "part": "",
+  "name_ru": "Антикрыло",
+  "group": "body",
+  "term": "wing",
+  "parent": "grp_body",
+  "center": [
+   0.0,
+   0.11477,
+   0.12833
+  ]
+ },
+ {
+  "id": "WING_STRUT_L",
+  "part": "",
+  "name_ru": "Стойка антикрыла левая",
+  "group": "body",
+  "term": "wing",
+  "parent": "grp_body",
+  "center": [
+   -0.0225,
+   0.10375,
+   0.12876
+  ]
+ },
+ {
+  "id": "WING_STRUT_R",
+  "part": "",
+  "name_ru": "Стойка антикрыла правая",
+  "group": "body",
+  "term": "wing",
+  "parent": "grp_body",
+  "center": [
+   0.0225,
+   0.10375,
+   0.12876
+  ]
+ },
+ {
+  "id": "M5387_FL",
+  "part": "M5387",
+  "name_ru": "Клипса кузова передняя левая",
+  "group": "body",
+  "term": "clips",
+  "parent": "grp_body",
+  "center": [
+   -0.01327,
+   0.10349,
+   -0.1
+  ]
+ },
+ {
+  "id": "M5387_FR",
+  "part": "M5387",
+  "name_ru": "Клипса кузова передняя правая",
+  "group": "body",
+  "term": "clips",
+  "parent": "grp_body",
+  "center": [
+   0.01473,
+   0.10349,
+   -0.1
+  ]
+ },
+ {
+  "id": "M5387_RL",
+  "part": "M5387",
+  "name_ru": "Клипса кузова задняя левая",
+  "group": "body",
+  "term": "clips",
+  "parent": "grp_body",
+  "center": [
+   -0.01327,
+   0.10249,
+   0.104
+  ]
+ },
+ {
+  "id": "M5387_RR",
+  "part": "M5387",
+  "name_ru": "Клипса кузова задняя правая",
+  "group": "body",
+  "term": "clips",
+  "parent": "grp_body",
+  "center": [
+   0.01473,
+   0.10249,
+   0.104
+  ]
+ }
+]
