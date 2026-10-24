@@ -16,17 +16,34 @@
   const PARTS = window.PARTS || [];
   const aliUrl = (q) => "https://aliexpress.ru/wholesale?SearchText=" + encodeURIComponent("Remo Hobby " + q);
 
+  // Номер детали → термин словарика, чтобы название в каталоге открывало объяснение.
+  const TERM_BY_PART = {
+    P2505: "arm", F5281: "arm", P6955: "shock", A6955: "shock", M5367: "dogbone",
+    P6956: "servosaver", P2511: "servosaver", P2512: "servo", P2529: "servo", P2519: "servo",
+    P2506: "chub", P2507: "knuckle", P2513: "hub", M5368: "hub", P2021: "hex", F5226: "hex",
+    E9661: "brushed", G2713: "gearT", G2715: "gearT", G2717: "gearT", A4027: "m390",
+    G1610: "spur", G1611: "diff", P2527: "shaft", P2516: "spur",
+    P6952: "diff", G1612: "diff", G1613: "diff", G1614: "diff", P2521: "dogbone", P2528: "diff",
+    P2501: "chassis", P2502: "chassis", P2503: "bumper", P2514: "bumper", M5387: "clips",
+    B5509: "bearing", B5510: "bearing", B5511: "bearing",
+    F5271: "screw", F5272: "screw", F5274: "screw", F5277: "screw", F5280: "chub"
+  };
+  const TERM_BY_NAME = { "Антикрыло S-EVOR": "wing", "Кузов S-EVOR": "body", "Регулятор 3 в 1": "3in1",
+    "Сервопривод 5-проводной": "servo", "Аккумулятор 7,4 В Li-Ion": "liion", "USB-зарядка": "balance" };
+  const termLink = (id, text) => id ? `<a class="term" href="#t-${id}" data-term="${id}">${esc(text)}</a>` : esc(text);
+
   function partRow(p) {
     const hasNo = p.no && p.no !== "—";
+    const term = TERM_BY_PART[p.no] || TERM_BY_NAME[p.name];
     const no = hasNo
       ? `<span class="part__no">${esc(p.no)}${p.alt ? `<small>или ${esc(p.alt)}</small>` : ""}</span>`
       : `<span class="part__no part__no--none">без номера</span>`;
     const q = hasNo ? p.no : "1661 " + p.name;
     return `<li class="part">
       ${no}
-      <div><div class="part__name">${esc(p.name)}${p.weak ? '<span class="weak">слабое место</span>' : ""}</div>
+      <div><div class="part__name">${termLink(term, p.name)}${p.weak ? '<span class="weak">слабое место</span>' : ""}</div>
       ${p.text ? `<p class="part__text">${esc(p.text)}</p>` : ""}</div>
-      <a class="part__buy" href="${aliUrl(q)}" rel="noopener" target="_blank">Искать →</a>
+      <span class="part__links">${hasNo ? `<a href="3d.html#${encodeURIComponent(p.no)}">В 3D</a>` : ""}<a href="${aliUrl(q)}" rel="noopener" target="_blank">Искать →</a></span>
     </li>`;
   }
 
@@ -103,6 +120,72 @@
     if (kit) kit.innerHTML = (G.kit || []).map((k) => `<li><b>${esc(k.name)}</b>${k.note ? `<small>${esc(k.note)}</small>` : ""}</li>`).join("");
   }
 
+  /* ── Словарик ── */
+  const GLOSSARY = window.GLOSSARY || [];
+  const TERMS = {};
+  GLOSSARY.forEach((g) => g.terms.forEach((t) => { TERMS[t.id] = t; }));
+
+  function termCard(t) {
+    return `<li class="gterm" id="t-${esc(t.id)}">
+      <h4>${esc(t.term)}</h4>${t.aka ? `<p class="aka">${esc(t.aka)}</p>` : ""}
+      <p>${esc(t.what)}</p>
+      <p class="why"><b>Зачем:</b> ${esc(t.why)}</p>
+    </li>`;
+  }
+
+  function renderGlossary() {
+    const box = $("#glossary");
+    if (!box) return;
+    const q = ($("#term-search")?.value || "").trim().toLowerCase();
+    box.innerHTML = GLOSSARY.map((g) => {
+      const list = g.terms.filter((t) => !q || [t.term, t.aka, t.what].some((v) => v && v.toLowerCase().includes(q)));
+      if (!list.length) return "";
+      return `<section class="glossary__group"><h3>${esc(g.group)}</h3><ul class="glossary__list">${list.map(termCard).join("")}</ul></section>`;
+    }).join("") || `<p class="empty">Такого слова пока нет в словарике.</p>`;
+  }
+
+  function initTermPopover() {
+    const pop = $("#termpop");
+    if (!pop) return;
+    let current = null;
+    function close() { pop.hidden = true; current = null; }
+    function open(a) {
+      const t = TERMS[a.dataset.term];
+      if (!t) return;
+      current = a;
+      pop.innerHTML = `<h4>${esc(t.term)}</h4>${t.aka ? `<p class="aka">${esc(t.aka)}</p>` : ""}
+        <p>${esc(t.what)}</p><p class="why"><b>Зачем:</b> ${esc(t.why)}</p>
+        <div class="termpop__foot"><a href="#t-${esc(t.id)}" data-goto="${esc(t.id)}">В словарике →</a><button type="button" class="termpop__close">Закрыть</button></div>`;
+      pop.hidden = false;
+      const r = a.getBoundingClientRect();
+      const w = pop.offsetWidth;
+      const left = Math.max(16, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - w - 16));
+      let top = window.scrollY + r.bottom + 8;
+      if (r.bottom + pop.offsetHeight + 16 > window.innerHeight && r.top > pop.offsetHeight + 80) top = window.scrollY + r.top - pop.offsetHeight - 8;
+      pop.style.left = left + "px";
+      pop.style.top = top + "px";
+    }
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest("a.term");
+      if (a) {
+        e.preventDefault();
+        if (current === a) close(); else open(a);
+        return;
+      }
+      if (e.target.closest(".termpop__close")) { close(); return; }
+      const go = e.target.closest("[data-goto]");
+      if (go) {
+        close();
+        if ($("#term-search")) { $("#term-search").value = ""; renderGlossary(); }
+        const card = document.getElementById("t-" + go.dataset.goto);
+        if (card) { e.preventDefault(); card.scrollIntoView({ block: "center" }); card.classList.add("is-flash"); setTimeout(() => card.classList.remove("is-flash"), 1600); }
+        return;
+      }
+      if (!e.target.closest("#termpop")) close();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  }
+
   /* ── Увеличение картинок ── */
   function initLightbox() {
     const dlg = $("#lightbox");
@@ -123,6 +206,12 @@
   /* ── 3D-модель: подключается, если рядом лежит model/sevor.glb ── */
   const MODEL = "model/sevor.glb";
   const MV_SRC = "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
+  // Метки слабых мест. Координаты glTF в метрах (x, вверх, назад), сняты с объектов модели.
+  const HOTSPOTS = [
+    { label: "Антикрыло", position: "0.07 0.128 0.122", normal: "0 1 0", target: "#node-body" },
+    { label: "Рычаги подвески", position: "0.05 0.03 -0.112", normal: "0 0 -1", target: "#node-suspension" },
+    { label: "Колёса", position: "0.109 0.045 -0.093", normal: "1 0 0", target: "#node-wheels" }
+  ];
 
   async function initModel() {
     const viewer = $("#viewer");
@@ -148,21 +237,22 @@
     mv.setAttribute("rotation-per-second", "18deg");
     mv.setAttribute("shadow-intensity", "1");
     mv.setAttribute("exposure", "1.05");
-    mv.setAttribute("camera-orbit", "35deg 72deg auto");
+    mv.setAttribute("camera-orbit", "140deg 70deg auto");
     mv.setAttribute("interaction-prompt", "none");
     mv.setAttribute("touch-action", "pan-y");
-    if (window.MODEL_HOTSPOTS) {
-      window.MODEL_HOTSPOTS.forEach((h, i) => {
-        const b = document.createElement("button");
-        b.className = "hotspot";
-        b.slot = "hotspot-" + i;
-        b.dataset.position = h.position;
-        b.dataset.normal = h.normal || "0 1 0";
-        b.innerHTML = `<span>${esc(h.label)}</span>`;
-        b.addEventListener("click", () => { location.hash = h.target || "#zapchasti"; });
-        mv.appendChild(b);
-      });
-    }
+    mv.setAttribute("poster", "model/preview.png");
+    HOTSPOTS.forEach((h, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "hotspot";
+      b.slot = "hotspot-" + i;
+      b.dataset.position = h.position;
+      b.dataset.normal = h.normal;
+      b.setAttribute("aria-label", h.label + " — открыть в каталоге");
+      b.innerHTML = `<span>${esc(h.label)}</span>`;
+      b.addEventListener("click", () => { location.hash = h.target; });
+      mv.appendChild(b);
+    });
 
     const tabs = document.createElement("div");
     tabs.className = "viewer__tabs";
@@ -182,8 +272,11 @@
 
   $("#part-search")?.addEventListener("input", renderCatalog);
   $("#part-weak")?.addEventListener("change", renderCatalog);
+  $("#term-search")?.addEventListener("input", renderGlossary);
+  renderGlossary();
   renderCatalog();
   renderGarage();
+  initTermPopover();
   initLightbox();
   initModel();
 })();

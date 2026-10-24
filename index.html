@@ -24,9 +24,11 @@
     <nav class="nav" aria-label="Разделы">
       <a href="#mashina">Машина</a>
       <a href="#instrukcii">Инструкции</a>
+      <a href="#slovarik">Словарик</a>
       <a href="#zapchasti">Запчасти</a>
       <a href="#garazh">Гараж</a>
       <a href="#magaziny">Магазины</a>
+      <a class="nav__3d" href="3d.html">3D-разбор</a>
     </nav>
   </div>
 </header>
@@ -37,15 +39,19 @@
 <section class="hero" id="top">
   <div class="wrap hero__grid">
     <div class="hero__text">
-      <p class="eyebrow">Remo Hobby S-EVOR · трагги 1:16 · 4WD</p>
+      <p class="eyebrow">Remo Hobby S-EVOR · <a class="term" href="#t-truggy" data-term="truggy">трагги</a> 1:16 · полный привод</p>
       <h1 class="hero__title">Машина <span>Ильи</span></h1>
       <p class="hero__lead">Паспорт, инструкции, каталог запчастей и журнал ремонта радиоуправляемой S-EVOR. Всё в одном месте, чтобы не искать по коробкам и чатам.</p>
       <dl class="hero__facts">
         <div><dt>В гараже с</dt><dd id="since">24 октября 2026</dd></div>
-        <div><dt>Мотор</dt><dd>390, коллекторный</dd></div>
-        <div><dt>Аккумулятор</dt><dd>7,4 В Li-Ion</dd></div>
-        <div><dt>Пульт</dt><dd>RH1, 2,4 ГГц</dd></div>
+        <div><dt>Мотор</dt><dd>390, <a class="term" href="#t-brushed" data-term="brushed">коллекторный</a></dd></div>
+        <div><dt>Аккумулятор</dt><dd>7,4 В <a class="term" href="#t-liion" data-term="liion">Li-Ion</a></dd></div>
+        <div><dt>Пульт</dt><dd>RH1, <a class="term" href="#t-ghz" data-term="ghz">2,4 ГГц</a></dd></div>
       </dl>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="3d.html">Разобрать машину в 3D</a>
+        <a class="btn" href="#slovarik">Что значат слова</a>
+      </div>
     </div>
     <figure class="viewer" id="viewer">
       <img class="viewer__photo" src="assets/img/remo/studio-red.jpg" alt="Remo Hobby S-EVOR в красно-синей ливрее, студийное фото производителя" width="1100" height="796">
@@ -60,7 +66,7 @@
     <header class="section__head">
       <p class="eyebrow">Паспорт</p>
       <h2>Что за машина</h2>
-      <p class="section__lead">S-EVOR (номер модели 1661) — трагги масштаба 1:16 на общей платформе Remo Hobby с SMAX 1631, Dingo и Rocket. Детали с пометками 1621 / 1631 / 1651 / 1661 / 1665 подходят друг к другу.</p>
+      <p class="section__lead">S-EVOR (номер модели 1661) — <a class="term" href="#t-truggy" data-term="truggy">трагги</a> <a class="term" href="#t-scale" data-term="scale">масштаба 1:16</a> на общей платформе Remo Hobby с SMAX 1631, Dingo и Rocket. Детали с пометками 1621 / 1631 / 1651 / 1661 / 1665 подходят друг к другу.</p>
     </header>
 
     <div class="passport">
@@ -68,22 +74,22 @@
         <table class="spec">
           <caption class="sr">Характеристики по данным производителя</caption>
           <tbody>
-            <tr><th>Масштаб</th><td>1:16, полный привод</td></tr>
+            <tr><th>Масштаб</th><td>1:16, <a class="term" href="#t-4wd" data-term="4wd">полный привод</a></td></tr>
             <tr><th>Длина</th><td class="num">295 мм</td></tr>
             <tr><th>Ширина (колея)</th><td class="num">210 мм</td></tr>
             <tr><th>Высота</th><td class="num">125 мм</td></tr>
             <tr><th>Колёсная база</th><td class="num">185 мм</td></tr>
             <tr><th>Диаметр шин</th><td class="num">75 мм</td></tr>
-            <tr><th>Мотор</th><td>390 коллекторный, <span class="pn">E9661</span></td></tr>
-            <tr><th>Регулятор</th><td>3 в 1 (регулятор, приёмник, выключатель), влагозащищённый</td></tr>
-            <tr><th>Защиты регулятора</th><td>Отсечка по низкому напряжению, перегреву и заклиниванию мотора</td></tr>
-            <tr><th>Привод</th><td>Карданный 4WD, металлические дифференциалы спереди и сзади</td></tr>
-            <tr><th>Передаточное число</th><td class="num">7,8 (главная шестерня M0.7, 39 зубьев)</td></tr>
-            <tr><th>Рулевое</th><td>Двойная качалка со встроенным сервосейвером, 5-проводной сервопривод</td></tr>
-            <tr><th>Амортизаторы</th><td>Масляные, алюминиевые колпачки</td></tr>
-            <tr><th>Шасси</th><td>Литая ванна из нейлонового композита</td></tr>
-            <tr><th>Аккумулятор</th><td>2S Li-Ion 7,4 В, 1500 мА·ч, разъём T-plug</td></tr>
-            <tr><th>Пульт</th><td>RH1, 2,4 ГГц, режимы Mode 1 / Mode 2, 4 × АА</td></tr>
+            <tr><th>Мотор</th><td><a class="term" href="#t-m390" data-term="m390">390</a> <a class="term" href="#t-brushed" data-term="brushed">коллекторный</a>, <span class="pn">E9661</span></td></tr>
+            <tr><th><a class="term" href="#t-esc" data-term="esc">Регулятор хода</a></th><td><a class="term" href="#t-3in1" data-term="3in1">3 в 1</a> (регулятор, <a class="term" href="#t-receiver" data-term="receiver">приёмник</a>, выключатель), <a class="term" href="#t-waterproof" data-term="waterproof">влагозащищённый</a></td></tr>
+            <tr><th>Защиты регулятора</th><td><a class="term" href="#t-cutoff" data-term="cutoff">Отсечка</a> по низкому напряжению, перегреву и заклиниванию мотора</td></tr>
+            <tr><th>Привод</th><td><a class="term" href="#t-shaft" data-term="shaft">Карданный</a> полный привод, металлические <a class="term" href="#t-diff" data-term="diff">дифференциалы</a> спереди и сзади</td></tr>
+            <tr><th><a class="term" href="#t-ratio" data-term="ratio">Передаточное число</a></th><td class="num">7,8 (<a class="term" href="#t-spur" data-term="spur">главная шестерня</a>: <a class="term" href="#t-module" data-term="module">модуль M0.7</a>, 39 зубьев)</td></tr>
+            <tr><th>Рулевое</th><td>Двойная качалка со встроенным <a class="term" href="#t-servosaver" data-term="servosaver">сервосейвером</a>, 5-проводной <a class="term" href="#t-servo" data-term="servo">сервопривод</a></td></tr>
+            <tr><th><a class="term" href="#t-shock" data-term="shock">Амортизаторы</a></th><td>Масляные, алюминиевые колпачки</td></tr>
+            <tr><th><a class="term" href="#t-chassis" data-term="chassis">Шасси</a></th><td>Литая ванна из нейлонового композита</td></tr>
+            <tr><th>Аккумулятор</th><td><a class="term" href="#t-2s" data-term="2s">2S</a> <a class="term" href="#t-liion" data-term="liion">Li-Ion</a> 7,4 В, 1500 <a class="term" href="#t-mah" data-term="mah">мА·ч</a>, разъём <a class="term" href="#t-tplug" data-term="tplug">T-plug</a></td></tr>
+            <tr><th>Пульт</th><td>RH1, <a class="term" href="#t-ghz" data-term="ghz">2,4 ГГц</a>, режимы <a class="term" href="#t-mode" data-term="mode">Mode 1 / Mode 2</a>, 4 батарейки АА</td></tr>
             <tr><th>Уровень сложности</th><td>3 из 5 по шкале Remo</td></tr>
           </tbody>
         </table>
@@ -104,14 +110,14 @@
     <div class="tour">
       <h3 class="tour__title">Из чего состоит</h3>
       <ul class="tour__grid">
-        <li><img width="566" height="540" src="assets/img/remo/motor.jpg" alt="" loading="lazy" data-zoom><b>Мотор 390</b><span>Коллекторный, на подшипниках. Радиатор сверху.</span></li>
-        <li><img width="566" height="538" src="assets/img/remo/esc.jpg" alt="" loading="lazy" data-zoom><b>Регулятор 3 в 1</b><span>Здесь кнопка включения и светодиод связи с пультом.</span></li>
-        <li><img width="564" height="540" src="assets/img/remo/servo.jpg" alt="" loading="lazy" data-zoom><b>Сервопривод</b><span>5-проводной, поворачивает передние колёса.</span></li>
-        <li><img width="564" height="542" src="assets/img/remo/shocks.jpg" alt="" loading="lazy" data-zoom><b>Амортизаторы</b><span>Масляные, с пружиной и алюминиевым колпачком.</span></li>
-        <li><img width="566" height="538" src="assets/img/remo/diff-gears.jpg" alt="" loading="lazy" data-zoom><b>Дифференциалы</b><span>Металлические шестерни, передний и задний одинаковые.</span></li>
-        <li><img width="560" height="540" src="assets/img/remo/dogbones.jpg" alt="" loading="lazy" data-zoom><b>Приводные валы</b><span>Стальные дог-боны от дифференциала к колёсам.</span></li>
+        <li><img width="566" height="540" src="assets/img/remo/motor.jpg" alt="" loading="lazy" data-zoom><b><a class="term" href="#t-m390" data-term="m390">Мотор 390</a></b><span>Коллекторный, на подшипниках. Радиатор сверху.</span></li>
+        <li><img width="566" height="538" src="assets/img/remo/esc.jpg" alt="" loading="lazy" data-zoom><b><a class="term" href="#t-3in1" data-term="3in1">Регулятор 3 в 1</a></b><span>Здесь кнопка включения и светодиод связи с пультом.</span></li>
+        <li><img width="564" height="540" src="assets/img/remo/servo.jpg" alt="" loading="lazy" data-zoom><b><a class="term" href="#t-servo" data-term="servo">Сервопривод</a></b><span>5-проводной, поворачивает передние колёса.</span></li>
+        <li><img width="564" height="542" src="assets/img/remo/shocks.jpg" alt="" loading="lazy" data-zoom><b><a class="term" href="#t-shock" data-term="shock">Амортизаторы</a></b><span>Масляные, с пружиной и алюминиевым колпачком.</span></li>
+        <li><img width="566" height="538" src="assets/img/remo/diff-gears.jpg" alt="" loading="lazy" data-zoom><b><a class="term" href="#t-diff" data-term="diff">Дифференциалы</a></b><span>Металлические шестерни, передний и задний одинаковые.</span></li>
+        <li><img width="560" height="540" src="assets/img/remo/dogbones.jpg" alt="" loading="lazy" data-zoom><b>Приводные валы</b><span>Стальные <a class="term" href="#t-dogbone" data-term="dogbone">дог-боны</a> от дифференциала к колёсам.</span></li>
         <li><img width="564" height="538" src="assets/img/remo/tires.jpg" alt="" loading="lazy" data-zoom><b>Колёса</b><span>Ø 75 мм, крупный протектор, гайка M4.</span></li>
-        <li><img width="564" height="540" src="assets/img/remo/led.jpg" alt="" loading="lazy" data-zoom><b>LED-фары</b><span>Две фары в переднем бампере.</span></li>
+        <li><img width="564" height="540" src="assets/img/remo/led.jpg" alt="" loading="lazy" data-zoom><b><a class="term" href="#t-led" data-term="led">Светодиодные фары</a></b><span>Две фары в переднем бампере.</span></li>
       </ul>
     </div>
   </div>
@@ -143,10 +149,10 @@
           <li><b>Зарядите аккумулятор.</b> С завода он заряжен не полностью. Как заряжать — ниже.</li>
           <li><b>Вставьте 4 батарейки АА в пульт.</b> Они не входят в комплект. Отсек — в нижней части пульта.</li>
           <li><b>Проверьте винты и гайки колёс.</b> Производитель советует делать это перед каждым катанием.</li>
-          <li><b>Подключите аккумулятор к машине</b> красными разъёмами T-plug. Они вставляются только одной стороной.</li>
-          <li><b>Включите пульт, потом машину</b> кнопкой на регуляторе. Загорится светодиод — связь есть.</li>
+          <li><b>Подключите аккумулятор к машине</b> красными разъёмами <a class="term" href="#t-tplug" data-term="tplug">T-plug</a>. Они вставляются только одной стороной.</li>
+          <li><b>Включите пульт, потом машину</b> кнопкой на <a class="term" href="#t-esc" data-term="esc">регуляторе</a>. Загорится светодиод — связь есть.</li>
           <li><b>Проверьте на весу.</b> Приподнимите машину: руль влево-вправо, курок газа на себя и от себя. Колёса должны отвечать.</li>
-          <li><b>Если машину уводит в сторону</b> на ровном месте, подстройте триммер руля в отсеке под крышкой сбоку пульта.</li>
+          <li><b>Если машину уводит в сторону</b> на ровном месте, подстройте <a class="term" href="#t-trim" data-term="trim">триммер</a> руля в отсеке под крышкой сбоку пульта.</li>
         </ol>
         <div class="howto__media">
           <figure class="plate"><img width="610" height="1040" src="assets/img/remo/tx-batteries.jpg" alt="Установка четырёх батареек АА в пульт" loading="lazy" data-zoom><figcaption>Батарейки в пульт</figcaption></figure>
@@ -159,26 +165,31 @@
       <h3>Зарядка аккумулятора</h3>
       <div class="howto__body">
         <div>
-          <p class="callout callout--red"><b>Только белый разъём.</b> К зарядке подключается белый балансировочный разъём. Красный T-plug остаётся свободным.</p>
+          <p class="callout callout--red"><b>Только белый разъём.</b> К зарядке подключается маленький белый <a class="term" href="#t-balance" data-term="balance">балансировочный разъём</a> (три провода: красный, белый, чёрный). Красный силовой <a class="term" href="#t-tplug" data-term="tplug">T-plug</a> к зарядке не подключается.</p>
+          <ol class="steps steps--compact">
+            <li><b>Вставьте USB-зарядку в блок питания</b> (лучше на 2 А). Индикатор на зарядке <b>горит</b> — она готова.</li>
+            <li><b>Подключите белый разъём аккумулятора.</b> Индикатор <b>мигает</b> — идёт зарядка.</li>
+            <li><b>Индикатор погас</b> — аккумулятор заряжен. Отключите его.</li>
+          </ol>
           <table class="lamp">
-            <caption>Индикатор зарядки KX7V4-200</caption>
+            <caption>Индикатор зарядки — по инструкции Remo Hobby</caption>
             <thead><tr><th>Что видно</th><th>Что значит</th></tr></thead>
             <tbody>
-              <tr><td><span class="led led--on"></span>Красный, аккумулятор не подключён</td><td>Зарядка под напряжением и ждёт</td></tr>
-              <tr><td><span class="led led--off"></span>Погас после подключения</td><td>Идёт зарядка</td></tr>
-              <tr><td><span class="led led--on"></span>Снова красный</td><td>Заряжено — отключить</td></tr>
+              <tr><td><span class="led led--on"></span>Горит, аккумулятор не подключён</td><td>Зарядка включена и ждёт</td></tr>
+              <tr><td><span class="led led--blink"></span>Мигает</td><td>Идёт зарядка</td></tr>
+              <tr><td><span class="led led--off"></span>Погас</td><td>Заряжено — отключить</td></tr>
             </tbody>
           </table>
           <ul class="ticks">
-            <li>Время: штатный аккумулятор — 1,5–3 часа, Spard 3000 — примерно на треть дольше.</li>
-            <li>USB-блок лучше на 2 А (так советует Remo). Вход зарядки 5 В, 0,5–2,5 А.</li>
+            <li>Время: штатный аккумулятор 1500 <a class="term" href="#t-mah" data-term="mah">мА·ч</a> — 1,5–3 часа, Spard 3000 — дольше.</li>
+            <li>Зарядка питается от USB 5 В. Блок на 2 А заряжает быстрее, чем порт компьютера.</li>
             <li>Тёплый аккумулятор — норма. <b>Горячий — сразу отключить.</b></li>
             <li>Не оставлять без присмотра. Класть на твёрдую негорючую поверхность.</li>
             <li>Заряжать при комнатной температуре. Зимой после улицы дать аккумулятору согреться.</li>
           </ul>
-          <p class="note">В инструкции Remo описана другая зарядка: индикатор горит, мигает при зарядке и гаснет в конце. У нашей KX7V4-200 логика как в таблице.</p>
+          <p class="note">Если индикатор вашей зарядки ведёт себя иначе, сверьтесь с надписями на её корпусе: у разных партий USB-зарядок бывает разная логика света.</p>
         </div>
-        <figure class="plate"><img width="1100" height="719" src="assets/img/remo/charger.jpg" alt="Схема зарядки: USB-блок, зарядное устройство, аккумулятор 7,4 В; подключать балансировочный разъём" loading="lazy" data-zoom><figcaption>Схема зарядки из инструкции Remo</figcaption></figure>
+        <figure class="plate"><img width="1100" height="719" src="assets/img/remo/charger.jpg" alt="Схема зарядки: USB-блок питания, зарядка, аккумулятор 7,4 В; подключается белый разъём" loading="lazy" data-zoom><figcaption>Схема зарядки из инструкции Remo</figcaption></figure>
       </div>
     </article>
 
@@ -205,11 +216,11 @@
           <ol class="legend">
             <li><b>Выключатель</b> питания пульта.</li>
             <li><b>Индикатор</b> красный / зелёный — состояние пульта и батареек.</li>
-            <li><b>Переключатель Mode 1 / Mode 2.</b></li>
+            <li><b>Переключатель <a class="term" href="#t-mode" data-term="mode">Mode 1 / Mode 2</a>.</b> Меняет режим пульта.</li>
             <li><b>Руль.</b> Повернуть — колёса поворачивают.</li>
             <li><b>Курок газа.</b> На себя — вперёд. От себя — тормоз, затем назад.</li>
-            <li><b>Нейтраль газа.</b> Подстройка, если машина ползёт при отпущенном курке.</li>
-            <li><b>Отсек под крышкой</b> с регуляторами триммирования.</li>
+            <li><b><a class="term" href="#t-neutral" data-term="neutral">Нейтраль газа</a>.</b> Подстройка, если машина ползёт при отпущенном курке.</li>
+            <li><b>Отсек под крышкой</b> с регуляторами — <a class="term" href="#t-trim" data-term="trim">триммерами</a>.</li>
           </ol>
           <figure class="plate plate--small"><img width="460" height="1000" src="assets/img/remo/steering.jpg" alt="Направления: A вперёд, B назад, L влево, R вправо" loading="lazy" data-zoom><figcaption>A — вперёд, B — назад, L / R — повороты</figcaption></figure>
         </div>
@@ -246,7 +257,7 @@
             <li>Надолго храните аккумулятор заряженным наполовину.</li>
             <li>Зимой аккумулятор садится быстрее. Держите запасной в тёплом кармане.</li>
             <li>По утоптанному снегу трагги едет отлично, в рыхлых сугробах застревает.</li>
-            <li>Регулятор влагозащищён, но лужи и мокрая каша — на свой риск.</li>
+            <li>Регулятор <a class="term" href="#t-waterproof" data-term="waterproof">влагозащищён</a>, но лужи и мокрая каша — на свой риск.</li>
           </ul>
         </div>
       </div>
@@ -259,12 +270,12 @@
           <thead><tr><th>Что происходит</th><th>Что проверить</th></tr></thead>
           <tbody>
             <tr><td>Машина не отвечает на пульт</td><td>Батарейки пульта. Порядок включения: сначала пульт, потом машина. Заряд аккумулятора. Горит ли светодиод на регуляторе.</td></tr>
-            <tr><td>Поехала медленно или рывками</td><td>Сел аккумулятор — поменять. Перегрелись мотор или регулятор — остудить 10–15 минут. Регулятор сам снижает мощность при низком напряжении.</td></tr>
-            <tr><td>Трещит при нажатии газа</td><td>Песок или камешек в шестернях. Срезаны зубья главной шестерни <span class="pn">G1610</span>. Выскочил дог-бон <span class="pn">M5367</span>.</td></tr>
-            <tr><td>Уводит в сторону</td><td>Триммер руля в отсеке пульта. Погнута рулевая тяга <span class="pn">P2512</span>. Сломан рычаг или кулак.</td></tr>
-            <tr><td>Колесо болтается</td><td>Гайка колеса <span class="pn">F5226</span>. Хекс <span class="pn">P2021</span>. Подшипник в кулаке.</td></tr>
-            <tr><td>Колесо висит, подвеска не держит</td><td>Сломан рычаг <span class="pn">P2505</span> — самая частая поломка. Выпала ось рычага <span class="pn">F5281</span>.</td></tr>
-            <tr><td>Руль не возвращается в центр</td><td>Качалки сервосейвера <span class="pn">P2511</span>. Тяга сервопривода <span class="pn">P2529</span>.</td></tr>
+            <tr><td>Поехала медленно или рывками</td><td>Сел аккумулятор — поменять. Перегрелись мотор или регулятор — остудить 10–15 минут. Регулятор сам снижает мощность при низком напряжении — это <a class="term" href="#t-cutoff" data-term="cutoff">отсечка</a>.</td></tr>
+            <tr><td>Трещит при нажатии газа</td><td>Песок или камешек в шестернях. Срезаны зубья <a class="term" href="#t-spur" data-term="spur">главной шестерни</a> <span class="pn">G1610</span>. Выскочил <a class="term" href="#t-dogbone" data-term="dogbone">дог-бон</a> <span class="pn">M5367</span>.</td></tr>
+            <tr><td>Уводит в сторону</td><td><a class="term" href="#t-trim" data-term="trim">Триммер</a> руля в отсеке пульта. Погнута рулевая тяга <span class="pn">P2512</span>. Сломан рычаг или кулак.</td></tr>
+            <tr><td>Колесо болтается</td><td>Гайка колеса <span class="pn">F5226</span>. <a class="term" href="#t-hex" data-term="hex">Хекс</a> <span class="pn">P2021</span>. <a class="term" href="#t-bearing" data-term="bearing">Подшипник</a> в <a class="term" href="#t-knuckle" data-term="knuckle">кулаке</a>.</td></tr>
+            <tr><td>Колесо висит, подвеска не держит</td><td>Сломан <a class="term" href="#t-arm" data-term="arm">рычаг</a> <span class="pn">P2505</span> — самая частая поломка. Выпала ось рычага <span class="pn">F5281</span>.</td></tr>
+            <tr><td>Руль не возвращается в центр</td><td>Качалки <a class="term" href="#t-servosaver" data-term="servosaver">сервосейвера</a> <span class="pn">P2511</span>. Тяга сервопривода <span class="pn">P2529</span>.</td></tr>
           </tbody>
         </table>
       </div>
@@ -297,8 +308,24 @@
   </div>
 </section>
 
+<!-- ═════ СЛОВАРИК ═════ -->
+<section class="section" id="slovarik">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">Словарик</p>
+      <h2>Что значат эти слова</h2>
+      <p class="section__lead">Технические слова простым языком: что это и зачем нужно. Подчёркнутые слова в тексте сайта можно нажать — объяснение откроется прямо там.</p>
+    </header>
+    <label class="filter__search glossary__search" for="term-search">
+      <span class="sr">Найти слово</span>
+      <input id="term-search" type="search" placeholder="Найти слово: дифференциал, сервосейвер, мА·ч" autocomplete="off">
+    </label>
+    <div id="glossary" class="glossary"></div>
+  </div>
+</section>
+
 <!-- ═════ ЗАПЧАСТИ ═════ -->
-<section class="section" id="zapchasti">
+<section class="section section--alt" id="zapchasti">
   <div class="wrap">
     <header class="section__head">
       <p class="eyebrow">Каталог</p>
@@ -320,14 +347,14 @@
       <div>
         <h3>Апгрейды</h3>
         <p>Remo рекомендует алюминиевые рычаги, кулаки, С-хабы, задние ступицы, стойки амортизаторов, стальную главную шестерню и амортизаторы A6955.</p>
-        <p class="callout">Металл ставить только туда, где пластик ломается регулярно. Пластиковая деталь принимает удар на себя, а металлическая передаёт его дальше, на более дорогие узлы.</p>
+        <p class="callout"><a class="term" href="#t-alloy" data-term="alloy">Металл</a> ставить только туда, где пластик ломается регулярно. Пластиковая деталь принимает удар на себя, а металлическая передаёт его дальше, на более дорогие узлы.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═════ ГАРАЖ ═════ -->
-<section class="section section--alt" id="garazh">
+<section class="section" id="garazh">
   <div class="wrap">
     <header class="section__head">
       <p class="eyebrow">Гараж</p>
@@ -364,7 +391,7 @@
 </section>
 
 <!-- ═════ МАГАЗИНЫ ═════ -->
-<section class="section" id="magaziny">
+<section class="section section--alt" id="magaziny">
   <div class="wrap">
     <header class="section__head">
       <p class="eyebrow">Где купить</p>
@@ -415,6 +442,9 @@
   <p id="lightbox-cap"></p>
 </dialog>
 
+<div class="termpop" id="termpop" role="dialog" aria-modal="false" hidden></div>
+
+<script src="data/glossary.js"></script>
 <script src="data/parts.js"></script>
 <script src="data/garage.js"></script>
 <script src="assets/js/site.js"></script>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3D-разбор S-EVOR</title>
+<meta name="description" content="Интерактивная 3D-модель Remo Hobby S-EVOR: каждую деталь можно выбрать, рассмотреть и узнать, что это такое.">
+<meta name="theme-color" content="#15191e">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/explorer.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="x">
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="brand" href="index.html" aria-label="На главную">
+      <span class="brand__plate">RH1661</span>
+      <span class="brand__name">Машина Ильи</span>
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="index.html#mashina">Машина</a>
+      <a href="index.html#instrukcii">Инструкции</a>
+      <a href="index.html#slovarik">Словарик</a>
+      <a href="index.html#zapchasti">Запчасти</a>
+      <a href="index.html#garazh">Гараж</a>
+      <a class="nav__3d" href="3d.html" aria-current="page">3D-разбор</a>
+    </nav>
+  </div>
+</header>
+
+<main class="x__main">
+  <aside class="x__side" id="side" aria-label="Список деталей">
+    <div class="x__sidehead">
+      <h1>3D-разбор</h1>
+      <p>Нажмите на деталь в модели или в списке.</p>
+      <label for="part-q" class="sr">Найти деталь</label>
+      <input id="part-q" type="search" placeholder="Найти: рычаг, P2505, шестерня" autocomplete="off">
+    </div>
+    <div class="x__tree" id="tree"><p class="x__muted">Загружаю модель…</p></div>
+  </aside>
+
+  <section class="x__stage" aria-label="3D-модель">
+    <div class="x__canvas" id="stage"></div>
+
+    <div class="x__tools" role="toolbar" aria-label="Инструменты просмотра">
+      <div class="x__tool">
+        <span class="x__label">Кузов</span>
+        <div class="seg" id="body-mode">
+          <button type="button" data-v="solid" aria-pressed="true">Обычный</button>
+          <button type="button" data-v="glass" aria-pressed="false">Прозрачный</button>
+          <button type="button" data-v="off" aria-pressed="false">Снять</button>
+        </div>
+      </div>
+      <div class="x__tool">
+        <label class="x__label" for="explode">Разобрать</label>
+        <input id="explode" type="range" min="0" max="100" value="0">
+      </div>
+      <div class="x__tool">
+        <label class="x__label" for="cut">Разрез</label>
+        <input id="cut" type="range" min="0" max="100" value="100">
+      </div>
+      <div class="x__tool x__tool--btns">
+        <button type="button" class="chip" id="isolate" aria-pressed="false">Только выбранная</button>
+        <button type="button" class="chip" id="reset">Сбросить вид</button>
+      </div>
+    </div>
+
+    <div class="x__hint" id="hint">Крутить — левая кнопка или палец · Двигать — правая кнопка или два пальца · Приближать — колёсико или щипок · Двойной клик — подлететь к детали</div>
+    <div class="x__loading" id="loading">Загружаю 3D-модель…</div>
+  </section>
+
+  <aside class="x__info" id="info" aria-live="polite" hidden>
+    <button type="button" class="x__close" id="info-close" aria-label="Закрыть">×</button>
+    <p class="x__group" id="i-group"></p>
+    <h2 id="i-name"></h2>
+    <p class="x__pn" id="i-pn"></p>
+    <div id="i-term"></div>
+    <div class="x__actions">
+      <button type="button" class="chip" id="i-focus">Подлететь</button>
+      <button type="button" class="chip" id="i-iso">Показать отдельно</button>
+    </div>
+    <p class="x__links" id="i-links"></p>
+  </aside>
+</main>
+
+<noscript><p class="wrap">Для 3D-разбора нужен JavaScript.</p></noscript>
+<script src="data/glossary.js"></script>
+<script type="module" src="assets/js/explorer.js"></script>
+</body>
+</html>
