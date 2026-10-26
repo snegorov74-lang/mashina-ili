@@ -209,6 +209,7 @@
 
   /* ── 3D-модель: подключается, если рядом лежит model/sevor.glb ── */
   const MODEL = "model/sevor.glb";
+  const POSTER = "model/preview.webp";
   const MV_SRC = "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
   // Метки слабых мест. Координаты glTF в метрах (x, вверх, назад), сняты с объектов модели.
   const HOTSPOTS = [
@@ -217,61 +218,68 @@
     { label: "Колёса", position: "0.105 0.0375 -0.0925", normal: "1 0 0", target: "#node-wheels" }
   ];
 
-  async function initModel() {
+  // 3D на главной загружается только по нажатию «3D»: просмотрщик и модель весят больше
+  // всей остальной страницы, а сразу показывать их незачем — по умолчанию стоит фото.
+  function initModel() {
     const viewer = $("#viewer");
     if (!viewer || location.protocol === "file:") return;
-    try {
-      const r = await fetch(MODEL, { method: "HEAD" });
-      if (!r.ok) return;
-    } catch (_) { return; }
-
-    const s = document.createElement("script");
-    s.type = "module";
-    s.src = MV_SRC;
-    document.head.appendChild(s);
-
     const photo = $(".viewer__photo", viewer);
     const cap = $("#viewer-cap");
-    const mv = document.createElement("model-viewer");
-    mv.setAttribute("src", MODEL);
-    mv.setAttribute("alt", "3D-модель Remo Hobby S-EVOR, её можно вращать");
-    mv.setAttribute("camera-controls", "");
-    mv.setAttribute("auto-rotate", "");
-    mv.setAttribute("auto-rotate-delay", "1500");
-    mv.setAttribute("rotation-per-second", "18deg");
-    mv.setAttribute("shadow-intensity", "1");
-    mv.setAttribute("exposure", "1.05");
-    mv.setAttribute("camera-orbit", "140deg 70deg auto");
-    mv.setAttribute("interaction-prompt", "none");
-    mv.setAttribute("touch-action", "pan-y");
-    mv.setAttribute("poster", "model/preview.png");
-    HOTSPOTS.forEach((h, i) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "hotspot";
-      b.slot = "hotspot-" + i;
-      b.dataset.position = h.position;
-      b.dataset.normal = h.normal;
-      b.setAttribute("aria-label", h.label + " — открыть в каталоге");
-      b.innerHTML = `<span>${esc(h.label)}</span>`;
-      b.addEventListener("click", () => { location.hash = h.target; });
-      mv.appendChild(b);
-    });
+    let mv = null;
+
+    function createViewer() {
+      const s = document.createElement("script");
+      s.type = "module";
+      s.src = MV_SRC;
+      document.head.appendChild(s);
+      mv = document.createElement("model-viewer");
+      mv.setAttribute("src", MODEL);
+      mv.setAttribute("alt", "3D-модель Remo Hobby S-EVOR, её можно вращать");
+      mv.setAttribute("camera-controls", "");
+      mv.setAttribute("auto-rotate", "");
+      mv.setAttribute("auto-rotate-delay", "1500");
+      mv.setAttribute("rotation-per-second", "18deg");
+      mv.setAttribute("shadow-intensity", "1");
+      mv.setAttribute("exposure", "1.05");
+      mv.setAttribute("camera-orbit", "140deg 70deg auto");
+      mv.setAttribute("interaction-prompt", "none");
+      mv.setAttribute("touch-action", "pan-y");
+      mv.setAttribute("poster", POSTER);
+      mv.setAttribute("loading", "eager");
+      HOTSPOTS.forEach((h, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "hotspot";
+        b.slot = "hotspot-" + i;
+        b.dataset.position = h.position;
+        b.dataset.normal = h.normal;
+        b.setAttribute("aria-label", h.label + " — открыть в каталоге");
+        b.innerHTML = `<span>${esc(h.label)}</span>`;
+        b.addEventListener("click", () => { location.hash = h.target; });
+        mv.appendChild(b);
+      });
+      viewer.prepend(mv);
+    }
 
     const tabs = document.createElement("div");
     tabs.className = "viewer__tabs";
-    tabs.innerHTML = '<button type="button" data-v="3d" aria-pressed="true">3D</button><button type="button" data-v="photo" aria-pressed="false">Фото</button>';
+    tabs.innerHTML = '<button type="button" data-v="photo" aria-pressed="true">Фото</button><button type="button" data-v="3d" aria-pressed="false">3D</button>';
+    const play = document.createElement("button");
+    play.type = "button";
+    play.className = "viewer__play";
+    play.textContent = "Покрутить в 3D";
+
     function show(v) {
-      mv.hidden = v !== "3d";
+      if (v === "3d" && !mv) createViewer();
+      if (mv) mv.hidden = v !== "3d";
       photo.hidden = v === "3d";
+      play.hidden = v === "3d";
       cap.textContent = v === "3d" ? "Крутите мышкой или пальцем" : "Фото Remo Hobby";
       tabs.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === v)));
     }
     tabs.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(b.dataset.v); });
-
-    viewer.prepend(mv);
-    viewer.appendChild(tabs);
-    show("3d");
+    play.addEventListener("click", () => show("3d"));
+    viewer.append(tabs, play);
   }
 
   $("#part-search")?.addEventListener("input", renderCatalog);

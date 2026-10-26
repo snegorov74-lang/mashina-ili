@@ -4,6 +4,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 const MODEL = "model/sevor.glb";
@@ -108,7 +109,9 @@ let anim = null;
 let homeDist = 0.6;
 
 /* ── Загрузка ── */
-new GLTFLoader().load(MODEL, (gltf) => {
+// Модель сжата Draco — декодер берём с того же CDN и той же версии three.js.
+const draco = new DRACOLoader().setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/");
+new GLTFLoader().setDRACOLoader(draco).load(MODEL, (gltf) => {
   const root = gltf.scene;
   scene.add(root);
   root.updateMatrixWorld(true);
@@ -156,7 +159,9 @@ new GLTFLoader().load(MODEL, (gltf) => {
   resetView(true);
   $("#loading").hidden = true;
   selectFromHash();
-}, undefined, () => {
+}, (e) => {
+  if (e.total) $("#loading").textContent = `Загружаю 3D-модель… ${Math.round((e.loaded / e.total) * 100)}%`;
+}, () => {
   $("#loading").textContent = "Не удалось загрузить модель. Обновите страницу.";
   $("#tree").innerHTML = '<p class="x__muted">Модель не загрузилась.</p>';
 });
