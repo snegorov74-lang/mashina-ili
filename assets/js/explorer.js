@@ -160,7 +160,11 @@ new GLTFLoader().setDRACOLoader(draco).load(MODEL, (gltf) => {
   $("#loading").hidden = true;
   selectFromHash();
 }, (e) => {
-  if (e.total) $("#loading").textContent = `Загружаю 3D-модель… ${Math.round((e.loaded / e.total) * 100)}%`;
+  // GitHub Pages отдаёт модель сжатой: total — сжатый размер, loaded — распакованный.
+  // Если они не сходятся, показываем загруженные килобайты вместо процентов.
+  $("#loading").textContent = e.total && e.loaded <= e.total
+    ? `Загружаю 3D-модель… ${Math.round((e.loaded / e.total) * 100)}%`
+    : `Загружаю 3D-модель… ${Math.round(e.loaded / 1024)} КБ`;
 }, () => {
   $("#loading").textContent = "Не удалось загрузить модель. Обновите страницу.";
   $("#tree").innerHTML = '<p class="x__muted">Модель не загрузилась.</p>';
