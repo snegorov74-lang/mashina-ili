@@ -42,6 +42,7 @@ GLB_PATH = os.path.join(HERE, f"sevor{SUFFIX}.glb")
 JSON_PATH = os.path.join(HERE, f"parts{SUFFIX}.json")
 PREVIEW_PATH = os.path.join(HERE, f"preview{SUFFIX}.png")
 PREVIEW_NOBODY_PATH = os.path.join(HERE, f"preview_nobody{SUFFIX}.png")
+PREVIEW_WEBP_PATH = os.path.join(HERE, f"preview{SUFFIX}.webp")
 
 # ---------------------------------------------------------------- размеры, м
 WR = 0.0375            # радиус шины (Ø 75)
@@ -55,6 +56,10 @@ ARM_XI, ARM_XO = 0.022, 0.058
 SHOCK_DY = 0.0115      # смещение амортизатора от оси колеса (наружу по Y)
 TOWER_Y = 0.1125       # внутренняя грань стойки амортизаторов
 MOTOR_X, MOTOR_Z = 0.0195, 0.0446   # ось мотора (межосевое до вала 20.8 мм)
+# облегчение для сайта: сегменты тел вращения и трубок, фаски выключены
+SEG_K = 0.45
+TUBE_K = 0.65
+BEVEL = False
 CORNERS = {"FL": (-1, 1), "FR": (1, 1), "RL": (-1, -1), "RR": (1, -1)}
 SIDE_RU = {"FL": "передний левый", "FR": "передний правый",
            "RL": "задний левый", "RR": "задний правый"}
@@ -266,6 +271,7 @@ class Part:
     def lathe(self, prof, mat, segs=32, closed=False, cap0=False, cap1=False,
               M=None, a0=0.0, a1=2 * math.pi):
         """Тело вращения вокруг локальной X. prof = [(x, r), ...]."""
+        segs = max(6, round(segs * SEG_K))
         full = abs(a1 - a0 - 2 * math.pi) < 1e-6
         n_ang = segs if full else segs + 1
         rings = []
@@ -348,6 +354,7 @@ class Part:
 
     def tube(self, pts, r, mat, segs=8, M=None, caps=True):
         """Трубка вдоль ломаной (провода, пружины, проволока)."""
+        segs = max(4, round(segs * TUBE_K))
         pts = [Vector(p) for p in pts]
         rings = []
         prev_n = None
@@ -391,7 +398,7 @@ class Part:
         self.lathe([(-half, r_in), (-half, r_out), (half, r_out), (half, r_in)], mat,
                    segs=segs, closed=True, M=M @ ROT_X2Y)
 
-    def bearing(self, M, r_out, r_in, w, segs=24):
+    def bearing(self, M, r_out, r_in, w, segs=14):
         """Подшипник вдоль локальной X: стальные кольца + чёрный пыльник."""
         h = w / 2
         rm1, rm2 = r_in + (r_out - r_in) * 0.28, r_in + (r_out - r_in) * 0.72
@@ -409,7 +416,7 @@ class Part:
         bm = self.bm
         if recalc:
             bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-        if bevel > 0:
+        if bevel > 0 and BEVEL:
             thr = math.radians(bevel_deg)
             edges = [e for e in bm.edges if e.is_manifold and e.calc_face_angle(0) > thr]
             if edges:
@@ -683,8 +690,7 @@ def build_drive():
 
     M_sp = axis_m((0, -0.0625, AZ), "-Y") @ ROT_Z2X
     p = Part("G1610", ["Gear_Nylon"])
-    p.gear(M_sp, 39, 0.0147, 0.0164, 0.0, 0.0030, "Gear_Nylon", r_in=0.0110)
-    p.ring_extrude(circle_pts(40, 0.0112), 0.0045, 0.0005, 0.0025, "Gear_Nylon", M=M_sp)
+    p.gear(M_sp, 39, 0.0147, 0.0164, 0.0, 0.0030, "Gear_Nylon", r_in=0.0)
     p.cyl((0, -0.0610, AZ), (0, -0.0675, AZ), 0.0048, "Gear_Nylon", segs=20, hole=0.0022)
     make(p, "G1610", "Главная шестерня 39T", "drive", "spur", sharp_deg=50)
 
@@ -752,7 +758,7 @@ def build_diff(end):
     make(p, "P2528", f"Корпус {g} дифференциала", "diff", "diff", parent=asm)
 
     p = Part(f"G1612_{end}", ["Steel"])
-    p.gear(Mx(0.0040) @ ROT_Z2X, 38, 0.0150, 0.0165, 0.0, 0.0035, "Steel", r_in=0.0068,
+    p.gear(Mx(0.0040) @ ROT_Z2X, 38, 0.0150, 0.0165, 0.0, 0.0035, "Steel", r_in=0.0,
            scale1=0.93)
     p.lathe([(0.0040, 0.0068), (0.0040, 0.0100), (0.0075, 0.0100), (0.0075, 0.0068)],
             "Steel", segs=30, closed=True, M=Mx(0))
@@ -774,7 +780,7 @@ def build_diff(end):
     for k, d in enumerate(dirs, 1):
         p = Part(f"G1613_{end}_{k}", ["Steel"])
         M, _ = frame_z_to(c + d * 0.0072, c)
-        p.gear(M, 10, 0.0026, 0.0037, 0.0, 0.0030, "Steel", r_in=0.0011, scale1=0.6)
+        p.gear(M, 8, 0.0026, 0.0037, 0.0, 0.0030, "Steel", r_in=0.0, scale1=0.6)
         make(p, "G1613", f"Сателлит {g} дифференциала №{k}", "diff", "diff",
              parent=asm, sharp_deg=50)
 
@@ -890,7 +896,7 @@ def build_shock(tag, sx, sy):
     make(p, "P6955", f"Корпус амортизатора {g}", "suspension", "shock", parent=asm)
 
     p = Part(f"P6955_cap_{tag}", ["Alu_Red"])
-    p.ring_extrude(gear_pts(30, 0.0070, 0.0075, tip=0.5, flank=0.05), 0.0017, 0.0, 0.0060,
+    p.ring_extrude(gear_pts(12, 0.0070, 0.0075, tip=0.5, flank=0.05), 0.0017, 0.0, 0.0060,
                    "Alu_Red", M=M @ Matrix.Translation((0, 0, L - 0.0110)))
     make(p, "P6955", f"Алюминиевый колпачок {g} амортизатора", "suspension", "shock",
          parent=asm, sharp_deg=50)
@@ -905,7 +911,7 @@ def build_shock(tag, sx, sy):
          parent=asm)
 
     p = Part(f"P6955_spring_{tag}", ["Chrome"])
-    p.helix(0.0110, L - 0.0110, 0.0071, 0.00075, 8.5, "Chrome", M=M, per=20, segs=8)
+    p.helix(0.0110, L - 0.0110, 0.0071, 0.00075, 8.5, "Chrome", M=M, per=9, segs=6)
     make(p, "P6955", f"Пружина {g} амортизатора", "suspension", "shock", parent=asm,
          sharp_deg=60)
 
@@ -1084,7 +1090,7 @@ def build_axle_parts(tag, sx, sy):
     p = Part(f"F5226_{tag}", ["Chrome"])
     Mn = axis_m((sx * 0.0882, yc, AZ), ax) @ ROT_Z2X
     p.ring_extrude(circle_pts(6, 0.0040, math.pi / 6), 0.0016, 0.0008, 0.0036, "Chrome", M=Mn)
-    p.ring_extrude(circle_pts(24, 0.0046), 0.0016, 0.0, 0.0008, "Chrome", M=Mn)
+    p.ring_extrude(circle_pts(12, 0.0046), 0.0016, 0.0, 0.0008, "Chrome", M=Mn)
     make(p, "F5226", f"Колёсная гайка M4 {ru}", "hubs", "hex", sharp_deg=40)
 
 
@@ -1103,8 +1109,8 @@ def build_wheel(tag, sx, sy):
     p = Part(f"D5425_{tag}", ["Rubber"])
     p.lathe([(-hw, 0.0255), (-hw, 0.0290), (-hw + 0.0015, 0.0312), (-hw + 0.0045, 0.0328),
              (hw - 0.0045, 0.0328), (hw - 0.0015, 0.0312), (hw, 0.0290), (hw, 0.0255)],
-            "Rubber", segs=56, closed=True)
-    pitches = 18
+            "Rubber", segs=64, closed=True)
+    pitches = 16
     h = math.pi / pitches
     for i in range(pitches):
         a = 2 * math.pi * i / pitches
@@ -1112,8 +1118,6 @@ def build_wheel(tag, sx, sy):
             M = R(a + da) @ Matrix.Translation((s * 0.0055, 0, 0.0348)) \
                 @ Matrix.Rotation(math.radians(-14 * s), 4, "Z")
             p.cbox((0, 0, 0), (0.0095, 0.0070, 0.0048), "Rubber", M=M)
-            M = R(a + da) @ Matrix.Translation((-s * 0.0010, 0, 0.0340))
-            p.cbox((0, 0, 0), (0.0040, 0.0030, 0.0032), "Rubber", M=M)
         for s, da in ((-1, h), (1, 0.0)):        # плечевые блоки, заходящие на боковину
             M = R(a + da) @ Matrix.Translation((s * 0.0150, 0, 0.0342)) \
                 @ Matrix.Rotation(math.radians(10 * s), 4, "Z")
@@ -1128,11 +1132,11 @@ def build_wheel(tag, sx, sy):
     p = Part(f"P2555_{tag}", ["Rim_Black"])
     p.lathe([(-0.0200, 0.0222), (-0.0200, 0.0262), (-0.0180, 0.0262), (-0.0180, 0.0252),
              (0.0170, 0.0252), (0.0170, 0.0266), (0.0205, 0.0266), (0.0205, 0.0236),
-             (0.0185, 0.0226), (-0.0180, 0.0222)], "Rim_Black", segs=56, closed=True)
-    for i in range(20):
-        a = 2 * math.pi * i / 20
+             (0.0185, 0.0226), (-0.0180, 0.0222)], "Rim_Black", segs=64, closed=True)
+    for i in range(12):
+        a = 2 * math.pi * i / 12
         q = (0.0251 * math.cos(a), 0.0251 * math.sin(a))
-        p.cyl((0.0205, *q), (0.0212, *q), 0.0006, "Rim_Black", segs=6)
+        p.cyl((0.0205, *q), (0.0212, *q), 0.0006, "Rim_Black", segs=8)
     p.lathe([(-0.0050, 0.0030), (-0.0050, 0.0078), (0.0040, 0.0078), (0.0040, 0.0030)],
             "Rim_Black", segs=24, closed=True)
     for i in range(5):     # 5 широких спиц, расширяются к ободу
@@ -1188,7 +1192,7 @@ def build_electric():
     for dx, mat in ((-0.0015, "Wire_Red"), (0.0015, "Wire_Black")):
         p.tube(catmull([(-0.0250 + dx, 0.0060, 0.0350), (-0.0230 + dx, 0.0100, 0.0420),
                         (-0.0175 + dx * 0.6, 0.0040, 0.0465),
-                        (-0.0160 + dx * 0.6, -0.0020, 0.0465)], 6), 0.0010, mat, segs=8)
+                        (-0.0160 + dx * 0.6, -0.0020, 0.0465)], 4), 0.0010, mat, segs=8)
     for i, mat in enumerate(("Wire_Red", "Wire_Black", "Wire_White")):
         dx = -0.0010 + i * 0.0010
         p.tube(catmull([(-0.0430 + dx, 0.0060, 0.0360), (-0.0430 + dx, 0.0080, 0.0420),
@@ -1198,14 +1202,14 @@ def build_electric():
     p = Part("WIRES_ESC", ["Wire_Red", "Wire_Black"])
     for dx, mat in ((-0.0015, "Wire_Red"), (0.0015, "Wire_Black")):
         p.tube(catmull([(-0.0160 + dx, 0.0130, 0.0300), (-0.0130 + dx, 0.0160, 0.0440),
-                        (-0.0160 + dx * 0.6, 0.0130, 0.0465)], 6), 0.0010, mat, segs=8)
+                        (-0.0160 + dx * 0.6, 0.0130, 0.0465)], 4), 0.0010, mat, segs=8)
     make(p, "", "Силовые провода регулятора к аккумулятору", "electric", "esc")
 
     p = Part("WIRES_MOTOR", ["Wire_Red", "Wire_Black"])
     for dx, mat, xm in ((-0.0015, "Wire_Red", -0.0045), (0.0015, "Wire_Black", 0.0045)):
         p.tube(catmull([(-0.0120, 0.0200 + dx, 0.0300), (-0.0050, 0.0150 + dx, 0.0620),
                         (0.0050, 0.0000 + dx, 0.0660), (MOTOR_X + xm, -0.0120, 0.0640),
-                        (MOTOR_X + xm, -0.0165, MOTOR_Z + 0.0165)], 6), 0.0010, mat, segs=8)
+                        (MOTOR_X + xm, -0.0165, MOTOR_Z + 0.0165)], 4), 0.0010, mat, segs=8)
     make(p, "", "Провода мотора", "electric", "brushed")
 
     p = Part("WIRES_SERVO", ["Wire_Black", "Wire_Red", "Wire_White", "Wire_Yellow"])
@@ -1214,14 +1218,14 @@ def build_electric():
         d = (i - 2) * 0.0007
         p.tube(catmull([(0.0250 + d, 0.0120, 0.0300), (0.0150 + d, 0.0080, 0.0480),
                         (-0.0050, 0.0150 + d, 0.0500), (-0.0150, 0.0350 + d, 0.0400),
-                        (-0.0175, 0.0400 + d, 0.0345)], 6), 0.00035, mat, segs=6)
+                        (-0.0175, 0.0400 + d, 0.0345)], 4), 0.00035, mat, segs=6)
     make(p, "", "Кабель сервопривода (5 проводов)", "electric", "servo")
 
     p = Part("WIRES_LED", ["Wire_Red", "Wire_Black"])
     for d, mat in ((-0.0006, "Wire_Red"), (0.0006, "Wire_Black")):
         p.tube(catmull([(-0.0080 + d, 0.1270, 0.0330), (-0.0300 + d, 0.1150, 0.0300),
                         (-0.0340 + d, 0.0800, 0.0300), (-0.0340 + d, 0.0500, 0.0300),
-                        (-0.0300 + d, 0.0465, 0.0300)], 6), 0.00045, mat, segs=6)
+                        (-0.0300 + d, 0.0465, 0.0300)], 4), 0.00045, mat, segs=6)
     make(p, "", "Провода светодиодной планки", "electric", "led")
 
     p = Part("LED_BAR", ["LED_Bar", "Plastic_Black"])
@@ -1313,7 +1317,7 @@ def body_face_material(ym, e):
 def make_camo_image():
     """Запечённая процедурная текстура: камуфляж + красная «S» с обеих сторон."""
     import numpy as np
-    W, H = 1024, 1024
+    W, H = 512, 512
     hx = lambda h: np.array([int(h.lstrip("#")[i:i + 2], 16) / 255 for i in (0, 2, 4)])
     main, accent, logo = LIVERY_COLORS[LIVERY]
     Ly = BODY_KEYS[0][0] - BODY_KEYS[-1][0]
@@ -1468,7 +1472,7 @@ def build_clips():
                             zc + 0.0022 - 0.0022 * math.cos(a)))
             pts += [(x + 0.0010, y, zc + 0.0044), (x - 0.0010, y, zc + 0.0060),
                     (x - 0.0035, y, zc + 0.0044), (x - 0.0065, y, zc + 0.0030)]
-            p.tube(catmull(pts, 3), 0.00045, "Steel", segs=6)
+            p.tube(catmull(pts, 2), 0.00045, "Steel", segs=6)
             make(p, "M5387", f"Клипса кузова {END_RU_F[end]} {lr(sx, True)}", "body",
                  "clips", sharp_deg=60)
 
@@ -1568,7 +1572,13 @@ def export_glb():
     bpy.ops.export_scene.gltf(
         filepath=GLB_PATH, export_format="GLB", export_apply=True,
         export_cameras=False, export_lights=False, export_yup=True,
-        export_extras=True, use_selection=False)
+        export_extras=True, use_selection=False,
+        export_image_format="WEBP", export_image_quality=82,
+        export_draco_mesh_compression_enable=True,
+        export_draco_mesh_compression_level=6,
+        export_draco_position_quantization=14,
+        export_draco_normal_quantization=10,
+        export_draco_texcoord_quantization=12)
 
 
 # ---------------------------------------------------------------- превью
@@ -1652,6 +1662,11 @@ def main():
         return
     cam = setup_render()
     render_view(cam, PREVIEW_PATH, (0.0, -0.008, 0.055), 38, 19, 0.70)
+    st = bpy.context.scene.render.image_settings      # постер для сайта
+    st.file_format, st.quality = "WEBP", 80
+    bpy.data.images["Render Result"].save_render(PREVIEW_WEBP_PATH)
+    st.file_format = "PNG"
+    print("SEVOR preview:", PREVIEW_WEBP_PATH)
     for d in PARTS:
         if d["obj"]["group"] == "body":
             d["obj"].hide_render = True
